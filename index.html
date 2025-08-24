@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rise & Shine</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 25px;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky; top: 0;
+    }
+    header .logo-title {
+      font-size: 20px;
+      font-weight: bold;
+      display: flex; align-items: center;
+    }
+    header button {
+      margin-left: 10px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #333;
+      color: #fff;
+      font-weight: bold;
+    }
+    main {
+      display: flex;
+      justify-content: space-around;
+      padding: 30px;
+      flex-wrap: wrap;
+    }
+    .column {
+      flex: 1;
+      min-width: 280px;
+      margin: 10px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .quote-box, .challenge-box {
+      text-align: center;
+    }
+    .quote {
+      font-size: 18px;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    .challenge {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #007bff;
+      color: #fff;
+      font-weight: bold;
+    }
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin-top: 20px;
+    }
+    .day {
+      padding: 15px;
+      border-radius: 6px;
+      background: #eee;
+      text-align: center;
+      cursor: pointer;
+    }
+    .completed {
+      background: #4caf50 !important;
+      color: #fff;
+      font-weight: bold;
+    }
+    nav {
+      margin: 20px;
+      text-align: center;
+    }
+    nav button {
+      margin: 0 10px;
+    }
+    #quoteCanvas {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-title">🌅 Rise & Shine</div>
+    <div>
+      <button onclick="showPage('home')">Home</button>
+      <button onclick="showPage('streak')">Progress</button>
+      <button onclick="resetProgress()">Reset</button>
+    </div>
+  </header>
+
+  <main id="homePage">
+    <div class="column">
+      <div class="quote-box">
+        <div class="quote" id="quoteText"></div>
+        <button class="btn" onclick="saveQuoteImage()">Save Quote</button>
+      </div>
+    </div>
+    <div class="column">
+      <div class="challenge-box">
+        <div class="challenge" id="challengeText"></div>
+        <button class="btn" onclick="markCompleted()">Mark Completed</button>
+      </div>
+    </div>
+  </main>
+
+  <main id="streakPage" style="display:none; flex-direction:column; align-items:center;">
+    <h2>Monthly Progress</h2>
+    <div class="calendar" id="calendar"></div>
+  </main>
+
+  <canvas id="quoteCanvas" width="1080" height="1080"></canvas>
+
+  <script>
+    const quotes = [
+      "Every step forward is a victory over doubt.",
+      "Discipline is the bridge between goals and success.",
+      "Small progress each day adds up to big results.",
+      "Push yourself, because no one else is going to do it.",
+      "Dream it. Believe it. Achieve it.",
+      "Consistency beats intensity.",
+      "Your only limit is your mind.",
+      "One day or day one. You decide.",
+      "Don’t count the days, make the days count.",
+      "Fall seven times, stand up eight."
+    ];
+
+    const challenges = [
+      "Do 20 push-ups today 💪",
+      "Hold a plank for 1 minute 🏋️",
+      "Take a 15-minute brisk walk 🚶",
+      "Do 30 squats 🦵",
+      "Stretch for 10 minutes 🧘",
+      "Drink 2 liters of water 💧",
+      "Climb 5 flights of stairs 🏃",
+      "Complete 15 burpees 🔥",
+      "Do 25 sit-ups 🌀",
+      "Run in place for 5 minutes ⏱"
+    ];
+
+    const today = new Date();
+    const quoteText = document.getElementById('quoteText');
+    const challengeText = document.getElementById('challengeText');
+    let streakData = JSON.parse(localStorage.getItem('streakData')) || {};
+
+    function loadContent() {
+      quoteText.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+      challengeText.textContent = challenges[Math.floor(Math.random() * challenges.length)];
+    }
+
+    function saveQuoteImage() {
+      const canvas = document.getElementById('quoteCanvas');
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#333";
+      ctx.font = "bold 48px Arial";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const words = quoteText.textContent.split(" ");
+      let line = "";
+      const lines = [];
+      words.forEach(word => {
+        let testLine = line + word + " ";
+        let width = ctx.measureText(testLine).width;
+        if (width > 800) {
+          lines.push(line);
+          line = word + " ";
+        } else {
+          line = testLine;
+        }
+      });
+      lines.push(line);
+
+      let y = canvas.height / 2 - (lines.length / 2) * 60;
+      lines.forEach(l => {
+        ctx.fillText(l.trim(), canvas.width / 2, y);
+        y += 60;
+      });
+
+      const link = document.createElement('a');
+      link.download = "quote.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+
+    function markCompleted() {
+      const day = today.getDate();
+      const key = `${today.getFullYear()}-${today.getMonth()}`;
+      if (!streakData[key]) streakData[key] = {};
+      streakData[key][day] = true;
+      localStorage.setItem('streakData', JSON.stringify(streakData));
+      renderCalendar();
+      alert("Challenge marked as completed ✅");
+    }
+
+    function renderCalendar() {
+      const calendar = document.getElementById('calendar');
+      calendar.innerHTML = "";
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const key = `${year}-${month}`;
+
+      for (let i = 1; i <= daysInMonth; i++) {
+        const dayDiv = document.createElement('div');
+        dayDiv.textContent = i;
+        dayDiv.className = "day";
+        if (streakData[key] && streakData[key][i]) {
+          dayDiv.classList.add('completed');
+        }
+        calendar.appendChild(dayDiv);
+      }
+    }
+
+    function resetProgress() {
+      if (confirm("Are you sure you want to reset progress?")) {
+        localStorage.removeItem('streakData');
+        streakData = {};
+        renderCalendar();
+      }
+    }
+
+    function showPage(page) {
+      document.getElementById('homePage').style.display = (page === 'home') ? 'flex' : 'none';
+      document.getElementById('streakPage').style.display = (page === 'streak') ? 'flex' : 'none';
+      if (page === 'streak') renderCalendar();
+    }
+
+    loadContent();
+  </script>
+</body>
+</html>
