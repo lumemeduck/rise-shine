@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Rise & Shine</title>
+<title>Rise &amp; Shine</title>
 <style>
   :root{
     --bg:#0f1220;
@@ -171,7 +171,7 @@
     <div class="nav">
       <div class="brand" role="button" onclick="Router.go('#home')" title="Go Home">
         <div class="logo" aria-hidden="true"></div>
-        <div class="title">Rise &amp; Shine <small>daily spark &amp; streaks</small></div>
+        <div class="title">Rise &amp; Shine <small></small></div>
       </div>
       <div class="actions">
         <button class="btn btn-accent" id="btnProgress" title="View Streak Progress">Progress</button>
@@ -188,28 +188,28 @@
         <article class="card" aria-live="polite">
           <h2 id="home-title">✨ Daily Motivation <span class="pill" id="quoteTag">Today</span></h2>
           <div id="quoteText" class="quote">Loading…</div>
-          <div id="quoteAuthor" class="author"></div>
+          <div id="quoteAuthor" class="author">Lumeme Duck</div>
           <div class="row">
             <button class="btn" id="btnNewQuote" title="Shuffle today’s quote">New Quote</button>
             <button class="btn" id="btnSaveQuote" title="Save quote as image">Save Quote</button>
           </div>
-          <p class="muted" style="margin-top:10px;">Tip: “Save Quote” downloads a share-ready image.</p>
+          <p class="muted" style="margin-top:10px;">Save Quote to download a share-ready image.</p>
         </article>
 
         <!-- Exercise column -->
         <article class="card" aria-live="polite">
-          <h2>🏃 Daily Exercise Challenge <span class="pill" id="challengeTag">Today</span></h2>
+          <h2>🏋️ Daily Challenge <span class="pill" id="challengeTag">Today</span></h2>
           <div id="challengeText" class="challenge">Loading…</div>
           <div class="row">
             <button class="btn" id="btnNewChallenge" title="Shuffle today’s challenge">New Challenge</button>
             <button class="btn btn-accent" id="btnComplete" title="Mark today completed">Mark Completed</button>
           </div>
-          <div class="status" id="completeStatus" hidden>✔ Logged to your streak!</div>
-          <p class="muted" style="margin-top:10px;">Your completion appears on the Streak page calendar.</p>
+          <div class="status" id="completeStatus" hidden="true">✔ Logged to your streak!</div>
+          <p class="muted" style="margin-top:10px;">Click progress to view your streak record.</p>
         </article>
       </div>
 
-      <p class="footnote">Your picks & progress are saved privately in this browser.</p>
+      <p class="footnote"><a href="">privacy policy</p></a>
     </section>
 
     <!-- STREAK VIEW -->
