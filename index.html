@@ -503,7 +503,7 @@ function saveQuoteAsImage(){
   drawSun(ctx, cardX + cardW - 110, cardY + 110, 44);
 
   // Download
-  const url = canvas.toDataURL("image/png");
+  const url = canvas.toDataURL("image.png");
   const a = document.createElement('a');
   a.href = url;
   a.download = `rise-and-shine-${DateUtil.ymd()}.png`;
