@@ -204,7 +204,7 @@
             <button class="btn" id="btnNewChallenge" title="Shuffle today’s challenge">New Challenge</button>
             <button class="btn btn-accent" id="btnComplete" title="Mark today completed">Mark Completed</button>
           </div>
-          <div class="status" id="completeStatus" .hidden="true">✔ Logged to your streak!</div>
+          <div class="status" id="completeStatus" hidden="true">✔ Logged to your streak!</div>
           <p class="muted" style="margin-top:10px;"></p>
         </article>
       </div>
@@ -426,7 +426,7 @@ function markTodayCompleted(){
   if (!AppState.completedDays[mk]) AppState.completedDays[mk] = {};
   AppState.completedDays[mk][String(day).padStart(2,'0')] = true;
   STORAGE.set('completedDays', AppState.completedDays);
-  document.getElementById('completeStatus').hidden = false;
+  document.getElementById('completeStatus') hidden = false;
   renderCalendar();
 }
 
