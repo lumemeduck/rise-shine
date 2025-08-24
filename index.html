@@ -110,10 +110,10 @@
 
   .quote{
     margin:8px 0 14px;
-    font-size:22px; line-height:1.35; font-weight:800;
+    font-size:22px; line-height:1.35; font-weight:700;
     letter-spacing:.2px;
   }
-  .author{ color:#c5c9df; font-weight:700; margin-bottom:18px; }
+  .author{ color:#c5c9df; font-weight:400; margin-bottom:18px; }
 
   .row{ display:flex; gap:10px; flex-wrap:wrap; }
   .row .btn{ flex: 0 0 auto; }
@@ -122,7 +122,7 @@
     font-size:18px; line-height:1.4; font-weight:700; margin:8px 0 14px;
   }
   .status{
-    display:flex; align-items:center; gap:8px; margin-top:6px; color:#9be6be; font-weight:700;
+    display:hidden; align-items:center; gap:8px; margin-top:6px; color:#9be6be; font-weight:700;
   }
 
   /* Tabs (views) */
@@ -426,7 +426,7 @@ function markTodayCompleted(){
   if (!AppState.completedDays[mk]) AppState.completedDays[mk] = {};
   AppState.completedDays[mk][String(day).padStart(2,'0')] = true;
   STORAGE.set('completedDays', AppState.completedDays);
-  document.getElementById('completeStatus') hidden = false;
+  document.getElementById('completeStatus') .hidden = false;
   renderCalendar();
 }
 
