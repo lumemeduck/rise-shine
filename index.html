@@ -1,257 +1,617 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Rise & Shine</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-      background: #f9f9f9;
-      color: #333;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 25px;
-      background: #fff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      position: sticky; top: 0;
-    }
-    header .logo-title {
-      font-size: 20px;
-      font-weight: bold;
-      display: flex; align-items: center;
-    }
-    header button {
-      margin-left: 10px;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      background: #333;
-      color: #fff;
-      font-weight: bold;
-    }
-    main {
-      display: flex;
-      justify-content: space-around;
-      padding: 30px;
-      flex-wrap: wrap;
-    }
-    .column {
-      flex: 1;
-      min-width: 280px;
-      margin: 10px;
-      padding: 20px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .quote-box, .challenge-box {
-      text-align: center;
-    }
-    .quote {
-      font-size: 18px;
-      font-style: italic;
-      margin-bottom: 20px;
-    }
-    .challenge {
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-    .btn {
-      padding: 10px 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #007bff;
-      color: #fff;
-      font-weight: bold;
-    }
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-      margin-top: 20px;
-    }
-    .day {
-      padding: 15px;
-      border-radius: 6px;
-      background: #eee;
-      text-align: center;
-      cursor: pointer;
-    }
-    .completed {
-      background: #4caf50 !important;
-      color: #fff;
-      font-weight: bold;
-    }
-    nav {
-      margin: 20px;
-      text-align: center;
-    }
-    nav button {
-      margin: 0 10px;
-    }
-    #quoteCanvas {
-      display: none;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rise & Shine</title>
+<style>
+  :root{
+    --bg:#0f1220;
+    --card:#161a2b;
+    --muted:#aab0c3;
+    --text:#eef1ff;
+    --accent:#66e5b5;
+    --accent-2:#9aa7ff;
+    --warn:#ffb44d;
+    --ok:#70f0a0;
+    --ring: rgba(153, 172, 255, .35);
+    --shadow: 0 10px 35px rgba(0,0,0,.35);
+    --radius: 18px;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 1200px at 110% -10%, rgba(153,167,255,.12), transparent 60%),
+      radial-gradient(900px 900px at -10% 120%, rgba(102,229,181,.12), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+  }
+
+  /* Header */
+  header{
+    position:sticky; top:0; z-index:10;
+    backdrop-filter:saturate(120%) blur(8px);
+    background: linear-gradient(to bottom, rgba(15,18,32,.9), rgba(15,18,32,.65));
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .nav{
+    max-width:1000px;
+    margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 18px;
+    gap:12px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:12px;
+  }
+  .logo{
+    width:34px; height:34px; border-radius:50%;
+    background: conic-gradient(from 210deg, #ffdd55, #ff8a00, #ffd86b, #fff2a1, #ffdd55);
+    box-shadow: 0 0 0 3px rgba(255, 221, 85, .15), inset 0 3px 12px rgba(0,0,0,.25);
+    position:relative;
+  }
+  .logo::after{
+    content:"";
+    position:absolute; inset:6px;
+    border-radius:50%;
+    background: radial-gradient(circle at 40% 30%, rgba(255,255,255,.8), rgba(255,255,255,0) 60%);
+    mix-blend-mode:screen;
+  }
+  .title{
+    font-weight:800; letter-spacing:.3px; font-size:18px;
+    display:flex; align-items:baseline; gap:8px;
+  }
+  .title small{ color:var(--muted); font-weight:600; font-size:12px; }
+
+  .actions{display:flex; gap:10px; align-items:center;}
+  .btn{
+    appearance:none; border:none; cursor:pointer;
+    padding:10px 14px; border-radius:12px;
+    background:linear-gradient(180deg, #202746, #161a2b);
+    color:var(--text); font-weight:700; letter-spacing:.2px;
+    box-shadow: var(--shadow);
+    border:1px solid rgba(255,255,255,.07);
+    transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease;
+  }
+  .btn:hover{ transform: translateY(-1px); border-color: var(--ring); box-shadow: 0 12px 40px rgba(153,167,255,.14); }
+  .btn:active{ transform: translateY(0); }
+  .btn-accent{ background: linear-gradient(180deg, #2a5fff, #223e98); }
+  .btn-warn{ background: linear-gradient(180deg, #5b2d00, #3b1d00); color:#ffd8a6; border-color: rgba(255, 180, 90, .25); }
+
+  main{ max-width:1000px; margin:22px auto; padding:0 18px 40px; }
+  .grid{
+    display:grid; grid-template-columns: 1fr; gap:20px;
+  }
+  @media (min-width: 900px){
+    .grid{ grid-template-columns: 1fr 1fr; }
+  }
+
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
+    border:1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius);
+    padding:18px; box-shadow: var(--shadow);
+  }
+  .card h2{
+    margin:0 0 12px; font-size:18px; letter-spacing:.3px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .muted{ color:var(--muted); }
+  .pill{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:6px 10px; border-radius:999px;
+    background:rgba(153,167,255,.12); color:#cfd6ff; font-size:12px; font-weight:700;
+    border:1px solid rgba(153,167,255,.25);
+  }
+
+  .quote{
+    margin:8px 0 14px;
+    font-size:22px; line-height:1.35; font-weight:800;
+    letter-spacing:.2px;
+  }
+  .author{ color:#c5c9df; font-weight:700; margin-bottom:18px; }
+
+  .row{ display:flex; gap:10px; flex-wrap:wrap; }
+  .row .btn{ flex: 0 0 auto; }
+
+  .challenge{
+    font-size:18px; line-height:1.4; font-weight:700; margin:8px 0 14px;
+  }
+  .status{
+    display:flex; align-items:center; gap:8px; margin-top:6px; color:#9be6be; font-weight:700;
+  }
+
+  /* Tabs (views) */
+  .view{ display:none; }
+  .view.active{ display:block; }
+
+  /* Calendar */
+  .cal-wrap{ overflow:hidden; }
+  .cal-head{
+    display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px;
+  }
+  .cal-title{ font-weight:800; letter-spacing:.3px; }
+  .cal-nav{ display:flex; gap:8px; }
+  .cal-btn{ padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#151a2a; color:var(--text); cursor:pointer; }
+  .calendar{
+    display:grid; grid-template-columns: repeat(7, 1fr); gap:8px; padding:8px; border-radius:14px;
+    background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
+    border:1px solid rgba(255,255,255,.07);
+  }
+  .dow, .day{
+    text-align:center; padding:10px 0; border-radius:12px;
+    border:1px dashed rgba(255,255,255,.06);
+  }
+  .dow{ color:var(--muted); font-weight:800; border:none; padding:6px 0; }
+  .day{ min-height:58px; display:flex; align-items:center; justify-content:center; position:relative; }
+  .day.muted{ opacity:.35; }
+  .day .n{ position:absolute; top:6px; left:8px; font-size:12px; color:var(--muted); }
+  .day.done{
+    background:
+      radial-gradient(220px 60px at 50% -10%, rgba(102,229,181,.20), transparent 60%),
+      linear-gradient(180deg, rgba(102,229,181,.16), rgba(102,229,181,.02));
+    border:1px solid rgba(102,229,181,.45);
+    box-shadow: inset 0 0 30px rgba(102,229,181,.08);
+  }
+  .day.today{ outline: 2px dashed rgba(153,167,255,.55); outline-offset:2px; }
+  .legend{ display:flex; gap:10px; align-items:center; margin-top:12px; color:var(--muted); font-size:12px; }
+  .dot{ width:12px; height:12px; border-radius:3px; background:#1a2139; border:1px solid rgba(255,255,255,.1); }
+  .dot.ok{ background:rgba(102,229,181,.35); border-color:rgba(102,229,181,.55); }
+
+  /* Footer note */
+  .footnote{ text-align:center; color:var(--muted); font-size:12px; margin-top:22px; }
+</style>
 </head>
 <body>
   <header>
-    <div class="logo-title">🌅 Rise & Shine</div>
-    <div>
-      <button onclick="showPage('home')">Home</button>
-      <button onclick="showPage('streak')">Progress</button>
-      <button onclick="resetProgress()">Reset</button>
+    <div class="nav">
+      <div class="brand" role="button" onclick="Router.go('#home')" title="Go Home">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="title">Rise &amp; Shine <small>daily spark &amp; streaks</small></div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-accent" id="btnProgress" title="View Streak Progress">Progress</button>
+        <button class="btn btn-warn" id="btnReset" title="Reset all data">Reset</button>
+      </div>
     </div>
   </header>
 
-  <main id="homePage">
-    <div class="column">
-      <div class="quote-box">
-        <div class="quote" id="quoteText"></div>
-        <button class="btn" onclick="saveQuoteImage()">Save Quote</button>
+  <main>
+    <!-- HOME VIEW -->
+    <section id="home" class="view active" aria-labelledby="home-title">
+      <div class="grid">
+        <!-- Quotes column -->
+        <article class="card" aria-live="polite">
+          <h2 id="home-title">✨ Daily Motivation <span class="pill" id="quoteTag">Today</span></h2>
+          <div id="quoteText" class="quote">Loading…</div>
+          <div id="quoteAuthor" class="author"></div>
+          <div class="row">
+            <button class="btn" id="btnNewQuote" title="Shuffle today’s quote">New Quote</button>
+            <button class="btn" id="btnSaveQuote" title="Save quote as image">Save Quote</button>
+          </div>
+          <p class="muted" style="margin-top:10px;">Tip: “Save Quote” downloads a share-ready image.</p>
+        </article>
+
+        <!-- Exercise column -->
+        <article class="card" aria-live="polite">
+          <h2>🏃 Daily Exercise Challenge <span class="pill" id="challengeTag">Today</span></h2>
+          <div id="challengeText" class="challenge">Loading…</div>
+          <div class="row">
+            <button class="btn" id="btnNewChallenge" title="Shuffle today’s challenge">New Challenge</button>
+            <button class="btn btn-accent" id="btnComplete" title="Mark today completed">Mark Completed</button>
+          </div>
+          <div class="status" id="completeStatus" hidden>✔ Logged to your streak!</div>
+          <p class="muted" style="margin-top:10px;">Your completion appears on the Streak page calendar.</p>
+        </article>
       </div>
-    </div>
-    <div class="column">
-      <div class="challenge-box">
-        <div class="challenge" id="challengeText"></div>
-        <button class="btn" onclick="markCompleted()">Mark Completed</button>
-      </div>
-    </div>
+
+      <p class="footnote">Your picks & progress are saved privately in this browser.</p>
+    </section>
+
+    <!-- STREAK VIEW -->
+    <section id="streak" class="view" aria-labelledby="streak-title">
+      <article class="card cal-wrap">
+        <div class="cal-head">
+          <div class="cal-title" id="streak-title">📅 Streak Progress</div>
+          <div class="cal-nav">
+            <button class="cal-btn" id="prevMonth" aria-label="Previous Month">←</button>
+            <button class="cal-btn" id="todayBtn" aria-label="Jump to Current Month">Today</button>
+            <button class="cal-btn" id="nextMonth" aria-label="Next Month">→</button>
+          </div>
+        </div>
+        <div id="calMeta" class="muted" style="margin:0 0 10px;"></div>
+        <div class="calendar" id="calendar"></div>
+        <div class="legend">
+          <span class="dot"></span> Missed
+          <span class="dot ok"></span> Completed
+          <span style="margin-left:8px;">— dashed outline marks <strong>today</strong></span>
+        </div>
+      </article>
+    </section>
   </main>
 
-  <main id="streakPage" style="display:none; flex-direction:column; align-items:center;">
-    <h2>Monthly Progress</h2>
-    <div class="calendar" id="calendar"></div>
-  </main>
+  <!-- Hidden canvas for image export -->
+  <canvas id="exportCanvas" width="1080" height="1080" style="display:none;"></canvas>
 
-  <canvas id="quoteCanvas" width="1080" height="1080"></canvas>
+<script>
+/* ---------- Utilities & Storage ---------- */
+const STORAGE = {
+  dailyKey: (prefix, date=new Date()) => {
+    const y = date.getFullYear(), m = String(date.getMonth()+1).padStart(2,'0'), d = String(date.getDate()).padStart(2,'0');
+    return `${prefix}_${y}-${m}-${d}`;
+  },
+  set(k, v){ localStorage.setItem(k, JSON.stringify(v)); },
+  get(k, fallback=null){
+    try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fallback; }
+    catch{ return fallback; }
+  },
+  remove(k){ localStorage.removeItem(k); },
+  clearAll(){
+    localStorage.removeItem('completedDays');
+    // Keep other keys generic wipe:
+    Object.keys(localStorage).forEach(k=>{
+      if(/^quote_\d{4}-\d{2}-\d{2}$/.test(k) || /^challenge_\d{4}-\d{2}-\d{2}$/.test(k)) localStorage.removeItem(k);
+    });
+  }
+};
 
-  <script>
-    const quotes = [
-      "Every step forward is a victory over doubt.",
-      "Discipline is the bridge between goals and success.",
-      "Small progress each day adds up to big results.",
-      "Push yourself, because no one else is going to do it.",
-      "Dream it. Believe it. Achieve it.",
-      "Consistency beats intensity.",
-      "Your only limit is your mind.",
-      "One day or day one. You decide.",
-      "Don’t count the days, make the days count.",
-      "Fall seven times, stand up eight."
-    ];
+const DateUtil = {
+  ymd(d=new Date()){ return d.toISOString().slice(0,10); },
+  monthKey(y,m){ return `${y}-${String(m+1).padStart(2,'0')}`; }, // m 0-based
+  startOfMonth(y,m){ return new Date(y,m,1); },
+  daysInMonth(y,m){ return new Date(y, m+1, 0).getDate(); },
+  isToday(y,m,day){ const t=new Date(); return t.getFullYear()===y && t.getMonth()===m && t.getDate()===day; }
+};
 
-    const challenges = [
-      "Do 20 push-ups today 💪",
-      "Hold a plank for 1 minute 🏋️",
-      "Take a 15-minute brisk walk 🚶",
-      "Do 30 squats 🦵",
-      "Stretch for 10 minutes 🧘",
-      "Drink 2 liters of water 💧",
-      "Climb 5 flights of stairs 🏃",
-      "Complete 15 burpees 🔥",
-      "Do 25 sit-ups 🌀",
-      "Run in place for 5 minutes ⏱"
-    ];
+/* ---------- Data ---------- */
+const QUOTES = [
+  {t:"Every step forward is a victory over doubt. Keep grinding—your purpose lights the way.", a:"—"},
+  {t:"Small daily wins compound into unstoppable momentum.", a:"—"},
+  {t:"Discipline is self-respect in action.", a:"—"},
+  {t:"You don’t need the perfect start—just the honest one.", a:"—"},
+  {t:"Courage is a habit. Practice it in tiny reps.", a:"—"},
+  {t:"When it feels heavy, it’s building you.", a:"—"},
+  {t:"Consistency beats intensity when intensity doesn’t last.", a:"—"},
+  {t:"Your future self is begging you to begin today.", a:"—"},
+  {t:"Energy follows focus. Guard what you give attention to.", a:"—"},
+  {t:"Progress loves patience. Keep showing up.", a:"—"},
+  {t:"Storms grow roots and wings—choose which one to use today.", a:"—"},
+  {t:"Hard things, done daily, make life easier.", a:"—"},
+  {t:"You are a result of what you repeat.", a:"—"},
+  {t:"Quietly improve. Loud results will speak later.", a:"—"},
+  {t:"You’re closer than your doubt suggests.", a:"—"},
+];
 
-    const today = new Date();
-    const quoteText = document.getElementById('quoteText');
-    const challengeText = document.getElementById('challengeText');
-    let streakData = JSON.parse(localStorage.getItem('streakData')) || {};
+const CHALLENGES = [
+  "Walk briskly for 20 minutes.",
+  "Do 3 sets of 15 squats.",
+  "Hold a 60-second plank (x3).",
+  "20 push-ups (break into sets).",
+  "Stretch full body for 10 minutes.",
+  "Jumping jacks 3×60 seconds.",
+  "15 burpees (any pace).",
+  "Climb stairs for 10 minutes.",
+  "Slow jog for 15 minutes.",
+  "Core circuit: 20 crunches ×3.",
+  "Glute bridges 3×20.",
+  "Wall-sit: 45 seconds ×3.",
+  "Yoga flow for 15 minutes.",
+  "Shadow boxing 10 minutes.",
+  "Balance drill: single-leg stand 60s each."
+];
 
-    function loadContent() {
-      quoteText.textContent = quotes[Math.floor(Math.random() * quotes.length)];
-      challengeText.textContent = challenges[Math.floor(Math.random() * challenges.length)];
-    }
+/* ---------- Daily Selection (deterministic per day unless shuffled) ---------- */
+function pickDaily(keyPrefix, pool){
+  const key = STORAGE.dailyKey(keyPrefix);
+  let idx = STORAGE.get(key);
+  if (idx == null){
+    idx = Math.floor(Math.random() * pool.length);
+    STORAGE.set(key, idx);
+  }
+  return {key, idx};
+}
 
-    function saveQuoteImage() {
-      const canvas = document.getElementById('quoteCanvas');
-      const ctx = canvas.getContext('2d');
+/* ---------- App State & Router ---------- */
+const AppState = {
+  quoteIndex: 0,
+  challengeIndex: 0,
+  completedDays: STORAGE.get('completedDays', {}), // { "YYYY-MM": { "DD": true } }
+  viewMonth: (()=>{ const d=new Date(); return {y:d.getFullYear(), m:d.getMonth()}; })()
+};
 
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+const Router = {
+  go(hash){ location.hash = hash; },
+  sync(){
+    const view = location.hash === '#streak' ? 'streak' : 'home';
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById(view).classList.add('active');
+    if (view === 'streak') renderCalendar();
+  }
+};
 
-      ctx.fillStyle = "#333";
-      ctx.font = "bold 48px Arial";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
+/* ---------- Rendering: Home ---------- */
+function renderHome(){
+  const q = QUOTES[AppState.quoteIndex];
+  const c = CHALLENGES[AppState.challengeIndex];
+  document.getElementById('quoteText').textContent = `“${q.t}”`;
+  document.getElementById('quoteAuthor').textContent = q.a && q.a !== "—" ? q.a : "";
+  document.getElementById('challengeText').textContent = c;
 
-      const words = quoteText.textContent.split(" ");
-      let line = "";
-      const lines = [];
-      words.forEach(word => {
-        let testLine = line + word + " ";
-        let width = ctx.measureText(testLine).width;
-        if (width > 800) {
-          lines.push(line);
-          line = word + " ";
-        } else {
-          line = testLine;
-        }
-      });
+  // Status if already completed today
+  const d = new Date();
+  const y = d.getFullYear(), m=d.getMonth(), day=d.getDate();
+  const mk = DateUtil.monthKey(y,m);
+  const done = !!(AppState.completedDays[mk] && AppState.completedDays[mk][String(day).padStart(2,'0')]);
+  const status = document.getElementById('completeStatus');
+  status.hidden = !done;
+
+  // Tag dates
+  const today = DateUtil.ymd();
+  document.getElementById('quoteTag').textContent = new Date().toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' });
+  document.getElementById('challengeTag').textContent = document.getElementById('quoteTag').textContent;
+}
+
+/* ---------- Calendar ---------- */
+function renderCalendar(){
+  const cal = document.getElementById('calendar');
+  cal.innerHTML = '';
+  const meta = document.getElementById('calMeta');
+
+  const {y,m} = AppState.viewMonth;
+  const monthName = new Date(y,m,1).toLocaleDateString(undefined, {month:'long', year:'numeric'});
+  meta.textContent = `Viewing ${monthName}`;
+
+  const dow = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  dow.forEach(d=>{
+    const el = document.createElement('div');
+    el.className='dow';
+    el.textContent = d;
+    cal.appendChild(el);
+  });
+
+  const first = DateUtil.startOfMonth(y,m).getDay();
+  const days = DateUtil.daysInMonth(y,m);
+  const prevDays = (first + 7) % 7;
+
+  // Add blanks
+  for (let i=0;i<prevDays;i++){
+    const pad = document.createElement('div');
+    pad.className = 'day muted';
+    cal.appendChild(pad);
+  }
+
+  const monthMap = AppState.completedDays[DateUtil.monthKey(y,m)] || {};
+
+  for (let d=1; d<=days; d++){
+    const el = document.createElement('div');
+    el.className = 'day';
+    if (DateUtil.isToday(y,m,d)) el.classList.add('today');
+
+    const n = document.createElement('div');
+    n.className = 'n';
+    n.textContent = d;
+    el.appendChild(n);
+
+    const dd = String(d).padStart(2,'0');
+    if (monthMap[dd]) el.classList.add('done');
+
+    cal.appendChild(el);
+  }
+}
+
+/* ---------- Actions ---------- */
+function shuffleQuoteForToday(){
+  const k = STORAGE.dailyKey('quote');
+  const next = Math.floor(Math.random() * QUOTES.length);
+  STORAGE.set(k, next);
+  AppState.quoteIndex = next;
+  renderHome();
+}
+function shuffleChallengeForToday(){
+  const k = STORAGE.dailyKey('challenge');
+  const next = Math.floor(Math.random() * CHALLENGES.length);
+  STORAGE.set(k, next);
+  AppState.challengeIndex = next;
+  renderHome();
+}
+
+function markTodayCompleted(){
+  const d = new Date();
+  const y = d.getFullYear(), m=d.getMonth(), day=d.getDate();
+  const mk = DateUtil.monthKey(y,m);
+  if (!AppState.completedDays[mk]) AppState.completedDays[mk] = {};
+  AppState.completedDays[mk][String(day).padStart(2,'0')] = true;
+  STORAGE.set('completedDays', AppState.completedDays);
+  document.getElementById('completeStatus').hidden = false;
+  renderCalendar();
+}
+
+function resetAll(){
+  if (!confirm("Reset all quotes, challenges, and streak progress?")) return;
+  STORAGE.clearAll();
+  AppState.completedDays = {};
+  STORAGE.set('completedDays', AppState.completedDays);
+  // Re-pick today's items
+  const q = pickDaily('quote', QUOTES); AppState.quoteIndex = q.idx;
+  const c = pickDaily('challenge', CHALLENGES); AppState.challengeIndex = c.idx;
+  renderHome(); renderCalendar();
+}
+
+/* ---------- Quote Image Export ---------- */
+function saveQuoteAsImage(){
+  const canvas = document.getElementById('exportCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  // Background gradient
+  const g1 = ctx.createLinearGradient(0,0,W,H);
+  g1.addColorStop(0, "#11152a");
+  g1.addColorStop(1, "#0b0e1d");
+  ctx.fillStyle = g1; ctx.fillRect(0,0,W,H);
+
+  const g2 = ctx.createRadialGradient(W*0.8, H*0.15, 40, W*0.8, H*0.15, 700);
+  g2.addColorStop(0, "rgba(102,229,181,0.35)");
+  g2.addColorStop(1, "rgba(102,229,181,0)");
+  ctx.fillStyle = g2; ctx.fillRect(0,0,W,H);
+
+  const g3 = ctx.createRadialGradient(W*0.1, H*0.85, 40, W*0.1, H*0.85, 700);
+  g3.addColorStop(0, "rgba(154,167,255,0.30)");
+  g3.addColorStop(1, "rgba(154,167,255,0)");
+  ctx.fillStyle = g3; ctx.fillRect(0,0,W,H);
+
+  // Card
+  const pad = 64;
+  const cardR = 32;
+  const cardX = pad, cardY = pad, cardW = W - pad*2, cardH = H - pad*2;
+  roundRect(ctx, cardX, cardY, cardW, cardH, cardR);
+  ctx.fillStyle = "rgba(255,255,255,0.04)";
+  ctx.fill();
+  ctx.strokeStyle = "rgba(255,255,255,0.10)";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Title/brand
+  ctx.font = "bold 38px system-ui, Segoe UI, Roboto, Arial";
+  ctx.fillStyle = "#eaf0ff";
+  ctx.fillText("Rise & Shine", cardX + 40, cardY + 70);
+  ctx.font = "600 22px system-ui, Segoe UI, Roboto, Arial";
+  ctx.fillStyle = "rgba(186,194,228,.85)";
+  const dateStr = new Date().toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+  ctx.fillText(dateStr, cardX + 40, cardY + 100);
+
+  // Quote
+  const quote = document.getElementById('quoteText').textContent.replace(/^“|”$/g,"");
+  ctx.font = "800 46px system-ui, Segoe UI, Roboto, Arial";
+  ctx.fillStyle = "#ffffff";
+  const lines = wrapText(ctx, `“${quote}”`, cardW - 120);
+  let y = cardY + 170;
+  lines.forEach(line=>{
+    ctx.fillText(line, cardX + 40, y);
+    y += 58;
+  });
+
+  // Footer mark
+  ctx.font = "700 20px system-ui, Segoe UI, Roboto, Arial";
+  ctx.fillStyle = "rgba(200,210,255,.9)";
+  ctx.fillText("@RiseAndShine", cardX + 40, cardY + cardH - 50);
+
+  // Decorative corner sun
+  drawSun(ctx, cardX + cardW - 110, cardY + 110, 44);
+
+  // Download
+  const url = canvas.toDataURL("image/png");
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `rise-and-shine-${DateUtil.ymd()}.png`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+function roundRect(ctx, x, y, w, h, r){
+  const rr = Math.min(r, w/2, h/2);
+  ctx.beginPath();
+  ctx.moveTo(x+rr, y);
+  ctx.arcTo(x+w, y, x+w, y+h, rr);
+  ctx.arcTo(x+w, y+h, x, y+h, rr);
+  ctx.arcTo(x, y+h, x, y, rr);
+  ctx.arcTo(x, y, x+w, y, rr);
+  ctx.closePath();
+}
+
+function wrapText(ctx, text, maxWidth){
+  const words = text.split(' ');
+  const lines = [];
+  let line = '';
+  for (let i=0;i<words.length;i++){
+    const test = line ? line + ' ' + words[i] : words[i];
+    const {width} = ctx.measureText(test);
+    if (width > maxWidth && line){
       lines.push(line);
-
-      let y = canvas.height / 2 - (lines.length / 2) * 60;
-      lines.forEach(l => {
-        ctx.fillText(l.trim(), canvas.width / 2, y);
-        y += 60;
-      });
-
-      const link = document.createElement('a');
-      link.download = "quote.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
+      line = words[i];
+    } else {
+      line = test;
     }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
 
-    function markCompleted() {
-      const day = today.getDate();
-      const key = `${today.getFullYear()}-${today.getMonth()}`;
-      if (!streakData[key]) streakData[key] = {};
-      streakData[key][day] = true;
-      localStorage.setItem('streakData', JSON.stringify(streakData));
-      renderCalendar();
-      alert("Challenge marked as completed ✅");
-    }
+function drawSun(ctx, x, y, r){
+  // core
+  const g = ctx.createRadialGradient(x, y, 5, x, y, r+28);
+  g.addColorStop(0, "#ffe084");
+  g.addColorStop(.6, "#ffbe55");
+  g.addColorStop(1, "rgba(255,190,85,0)");
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
 
-    function renderCalendar() {
-      const calendar = document.getElementById('calendar');
-      calendar.innerHTML = "";
-      const year = today.getFullYear();
-      const month = today.getMonth();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const key = `${year}-${month}`;
+  // rays
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.strokeStyle = "rgba(255, 224, 132, .65)";
+  ctx.lineWidth = 4;
+  for(let i=0;i<12;i++){
+    const a = (Math.PI*2) * (i/12);
+    const r1 = r + 10, r2 = r + 34;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(a)*r1, Math.sin(a)*r1);
+    ctx.lineTo(Math.cos(a)*r2, Math.sin(a)*r2);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
 
-      for (let i = 1; i <= daysInMonth; i++) {
-        const dayDiv = document.createElement('div');
-        dayDiv.textContent = i;
-        dayDiv.className = "day";
-        if (streakData[key] && streakData[key][i]) {
-          dayDiv.classList.add('completed');
-        }
-        calendar.appendChild(dayDiv);
-      }
-    }
+/* ---------- Init ---------- */
+function init(){
+  // Load today's deterministic selections (unless already shuffled earlier today)
+  const q = pickDaily('quote', QUOTES);
+  const c = pickDaily('challenge', CHALLENGES);
+  AppState.quoteIndex = q.idx;
+  AppState.challengeIndex = c.idx;
 
-    function resetProgress() {
-      if (confirm("Are you sure you want to reset progress?")) {
-        localStorage.removeItem('streakData');
-        streakData = {};
-        renderCalendar();
-      }
-    }
+  // Bind header
+  document.getElementById('btnProgress').addEventListener('click', ()=>Router.go('#streak'));
+  document.getElementById('btnReset').addEventListener('click', resetAll);
 
-    function showPage(page) {
-      document.getElementById('homePage').style.display = (page === 'home') ? 'flex' : 'none';
-      document.getElementById('streakPage').style.display = (page === 'streak') ? 'flex' : 'none';
-      if (page === 'streak') renderCalendar();
-    }
+  // Bind home actions
+  document.getElementById('btnNewQuote').addEventListener('click', shuffleQuoteForToday);
+  document.getElementById('btnSaveQuote').addEventListener('click', saveQuoteAsImage);
+  document.getElementById('btnNewChallenge').addEventListener('click', shuffleChallengeForToday);
+  document.getElementById('btnComplete').addEventListener('click', markTodayCompleted);
 
-    loadContent();
-  </script>
+  // Bind calendar nav
+  document.getElementById('prevMonth').addEventListener('click', ()=>{
+    const {y,m} = AppState.viewMonth;
+    const d = new Date(y, m-1, 1);
+    AppState.viewMonth = {y:d.getFullYear(), m:d.getMonth()};
+    renderCalendar();
+  });
+  document.getElementById('nextMonth').addEventListener('click', ()=>{
+    const {y,m} = AppState.viewMonth;
+    const d = new Date(y, m+1, 1);
+    AppState.viewMonth = {y:d.getFullYear(), m:d.getMonth()};
+    renderCalendar();
+  });
+  document.getElementById('todayBtn').addEventListener('click', ()=>{
+    const d = new Date();
+    AppState.viewMonth = {y:d.getFullYear(), m:d.getMonth()};
+    renderCalendar();
+  });
+
+  // Router
+  window.addEventListener('hashchange', Router.sync);
+
+  // First render
+  renderHome();
+  renderCalendar();
+  Router.sync();
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
 </body>
 </html>
