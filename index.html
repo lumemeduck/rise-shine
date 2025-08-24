@@ -188,7 +188,7 @@
         <article class="card" aria-live="polite">
           <h2 id="home-title">✨ Today's Motivation <span class="pill" id="quoteTag">Today</span></h2>
           <div id="quoteText" class="quote">Loading…</div>
-          <div id="quoteAuthor" class="author">Lumeme Duck</div>
+          <div id="quoteAuthor" class="author">LMD Quotes</div>
           <div class="row">
             <button class="btn" id="btnNewQuote" title="Shuffle today's quote">New Quote</button>
             <button class="btn" id="btnSaveQuote" title="Save quote as image">Download Quote</button>
@@ -204,7 +204,7 @@
             <button class="btn" id="btnNewChallenge" title="Shuffle today’s challenge">New Challenge</button>
             <button class="btn btn-accent" id="btnComplete" title="Mark today completed">Mark Completed</button>
           </div>
-          <div class="status" id="completeStatus" hidden="true">✔ Logged to your streak!</div>
+          <div class="status" id="completeStatus" .hidden="true">✔ Logged to your streak!</div>
           <p class="muted" style="margin-top:10px;"></p>
         </article>
       </div>
@@ -228,7 +228,7 @@
         <div class="legend">
           <span class="dot"></span> Missed
           <span class="dot ok"></span> Completed
-          <span style="margin-left:8px;">— marks <strong>today</strong></span>
+          <span style="margin-left:8px;">-- marks <strong>today</strong></span>
         </div>
       </article>
     </section>
@@ -269,21 +269,21 @@ const DateUtil = {
 
 /* ---------- Data ---------- */
 const QUOTES = [
-  {t:"Every step forward is a victory over doubt. Keep grinding—your purpose lights the way.", a:"—"},
-  {t:"Small daily wins compound into unstoppable momentum.", a:"—"},
-  {t:"Discipline is self-respect in action.", a:"—"},
-  {t:"You don’t need the perfect start—just the honest one.", a:"—"},
-  {t:"Courage is a habit. Practice it in tiny reps.", a:"—"},
-  {t:"When it feels heavy, it’s building you.", a:"—"},
-  {t:"Consistency beats intensity when intensity doesn’t last.", a:"—"},
-  {t:"Your future self is begging you to begin today.", a:"—"},
-  {t:"Energy follows focus. Guard what you give attention to.", a:"—"},
-  {t:"Progress loves patience. Keep showing up.", a:"—"},
-  {t:"Storms grow roots and wings—choose which one to use today.", a:"—"},
-  {t:"Hard things, done daily, make life easier.", a:"—"},
-  {t:"You are a result of what you repeat.", a:"—"},
-  {t:"Quietly improve. Loud results will speak later.", a:"—"},
-  {t:"You’re closer than your doubt suggests.", a:"—"},
+  {t:"Every step forward is a victory over doubt. Keep grinding—your purpose lights the way.", a:"LMD Quotes"},
+  {t:"Small daily wins compound into unstoppable momentum.", a:"LMD Quotes"},
+  {t:"Discipline is self-respect in action.", a:"LMD Quotes"},
+  {t:"You don’t need the perfect start—just the honest one.", a:"LMD Quotes"},
+  {t:"Courage is a habit. Practice it in tiny reps.", a:"LMD Quotes"},
+  {t:"When it feels heavy, it’s building you.", a:"LMD Quotes"},
+  {t:"Consistency beats intensity when intensity doesn’t last.", a:"LMD Quotes"},
+  {t:"Your future self is begging you to begin today.", a:"LMD Quotes"},
+  {t:"Energy follows focus. Guard what you give attention to.", a:"LMD Quotes"},
+  {t:"Progress loves patience. Keep showing up.", a:"LMD Quotes"},
+  {t:"Storms grow roots and wings—choose which one to use today.", a:"LMD Quotes"},
+  {t:"Hard things, done daily, make life easier.", a:"LMD Quotes"},
+  {t:"You are a result of what you repeat.", a:"LMD Quotes"},
+  {t:"Quietly improve. Loud results will speak later.", a:"LMD Quotes"},
+  {t:"You’re closer than your doubt suggests.", a:"LMD Quotes"},
 ];
 
 const CHALLENGES = [
@@ -497,7 +497,7 @@ function saveQuoteAsImage(){
   // Footer mark
   ctx.font = "700 20px system-ui, Segoe UI, Roboto, Arial";
   ctx.fillStyle = "rgba(200,210,255,.9)";
-  ctx.fillText("@RiseAndShine", cardX + 40, cardY + cardH - 50);
+  ctx.fillText("@lumeme_duck", cardX + 40, cardY + cardH - 50);
 
   // Decorative corner sun
   drawSun(ctx, cardX + cardW - 110, cardY + 110, 44);
