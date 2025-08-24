@@ -113,7 +113,7 @@
     font-size:22px; line-height:1.35; font-weight:700;
     letter-spacing:.2px;
   }
-  .author{ color:#c5c9df; font-weight:400; margin-bottom:18px; }
+  .author{ color:#c5c9df; font-size:14px; font-weight:400; margin-bottom:18px; }
 
   .row{ display:flex; gap:10px; flex-wrap:wrap; }
   .row .btn{ flex: 0 0 auto; }
@@ -292,11 +292,11 @@ const CHALLENGES = [
   "Hold a 60-second plank (x3).",
   "20 push-ups (break into sets).",
   "Stretch full body for 10 minutes.",
-  "Jumping jacks 3×60 seconds.",
+  "Jumping jacks 3 times for 60 seconds each.",
   "15 burpees (any pace).",
   "Climb stairs for 10 minutes.",
   "Slow jog for 15 minutes.",
-  "Core circuit: 20 crunches ×3.",
+  "Core circuit: 20 crunches for 3 times.",
   "Glute bridges 3×20.",
   "Wall-sit: 45 seconds ×3.",
   "Yoga flow for 15 minutes.",
@@ -497,7 +497,7 @@ function saveQuoteAsImage(){
   // Footer mark
   ctx.font = "700 20px system-ui, Segoe UI, Roboto, Arial";
   ctx.fillStyle = "rgba(200,210,255,.9)";
-  ctx.fillText("@lumeme_duck", cardX + 40, cardY + cardH - 50);
+  ctx.fillText("Powered by: @lumeme_duck", cardX + 40, cardY + cardH - 50);
 
   // Decorative corner sun
   drawSun(ctx, cardX + cardW - 110, cardY + 110, 44);
