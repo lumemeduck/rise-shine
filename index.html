@@ -514,7 +514,58 @@ function saveQuoteAsImage(){
   a.click();
   a.remove();
 }
+  
+  /* ----------------------------------------------------------
+     WEBVIEW-SAFE DOWNLOAD
+  ---------------------------------------------------------- */
+  const dataURL = canvas.toDataURL('image/png');
+  const fileName = `rise-and-shine-${DateUtil.ymd()}.png`;
 
+  // 1) AppCreator24 WebView → try Cordova plugin (if it exists)
+  if (window.cordova && cordova.plugins && cordova.plugins.file) {
+    saveViaCordovaFile(dataURL, fileName);
+    return;
+  }
+
+  // 2) AndroidInterface shim (if you somehow inject it later)
+  if (window.AndroidInterface && window.AndroidInterface.downloadBase64) {
+    window.AndroidInterface.downloadBase64(
+      dataURL.split(',')[1], fileName, 'image/png'
+    );
+    return;
+  }
+
+  // 3) Universal fallback – open in external browser
+  try {
+    window.open(dataURL, '_system');   // forces Chrome / Samsung Internet
+  } catch (e) {
+    window.open(dataURL, '_blank');    // last resort
+  }
+
+  /* ----------------------------------------------------------
+     Helper for Cordova (only used if Cordova plugin exists)
+  ---------------------------------------------------------- */
+  function saveViaCordovaFile(dataURL, name) {
+    const blob = dataURLToBlob(dataURL);
+    const path = (cordova.file.externalRootDirectory || cordova.file.cacheDirectory) + 'Download/' + name;
+    window.resolveLocalFileSystemURL(path.substr(0, path.lastIndexOf('/')), dir => {
+      dir.getFile(name, { create: true }, fileEntry => {
+        fileEntry.createWriter(writer => {
+          writer.onwriteend = () => alert('Saved to Download/' + name);
+          writer.write(blob);
+        });
+      });
+    });
+  }
+
+function dataURLToBlob(dataURL) {
+    const arr = dataURL.split(','), mime = arr[0].match(/:(.*?);/)[1],
+          byteStr = atob(arr[1]), ab = new Uint8Array(byteStr.length);
+    for (let i = 0; i < byteStr.length; i++) ab[i] = byteStr.charCodeAt(i);
+    return new Blob([ab], { type: mime });
+  }
+  }
+  
 function roundRect(ctx, x, y, w, h, r){
   const rr = Math.min(r, w/2, h/2);
   ctx.beginPath();
