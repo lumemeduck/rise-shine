@@ -506,13 +506,11 @@ function saveQuoteAsImage(){
   drawSun(ctx, cardX + cardW - 110, cardY + 110, 44);
 
   // Download
-  const url = canvas.toDataURL("image/png");
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `rise-and-shine-${DateUtil.ymd()}.png`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+  const dataURL = canvas.toDataURL('image/png');
+  const fileName = `rise-and-shine-${DateUtil.ymd()}.png`;
+
+  // WebView-safe: open in the *system* browser
+  window.open(dataURL, '_system');
   }
 
 function roundRect(ctx, x, y, w, h, r){
