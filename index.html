@@ -506,19 +506,13 @@ function saveQuoteAsImage(){
   drawSun(ctx, cardX + cardW - 110, cardY + 110, 44);
 
   // Download
-  const url = canvas.toDataURL("image/png");
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `rise-and-shine-${DateUtil.ymd()}.png`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-}
+  
   
   /* ----------------------------------------------------------
      WEBVIEW-SAFE DOWNLOAD
   ---------------------------------------------------------- */
-  
+  const dataURL = canvas.toDataURL('image/png');
+  const fileName = `rise-and-shine-${DateUtil.ymd()}.png`;
 
   // 1) AppCreator24 WebView → try Cordova plugin (if it exists)
   if (window.cordova && cordova.plugins && cordova.plugins.file) {
