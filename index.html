@@ -510,8 +510,12 @@ function saveQuoteAsImage(){
   const fileName = `rise-and-shine-${DateUtil.ymd()}.png`;
 
   // WebView-safe: open in the *system* browser
-  window.open(dataURL, '_system');
-  }
+  const quote = document.getElementById('quoteText').textContent;
+const author = document.getElementById('quoteAuthor').textContent;
+const url =
+  `https://image-charts.com/chart?chs=1080x1080&chco=161a2b&chf=bg,s,0f1220&chxl=0:|${encodeURIComponent(quote)}|1:|${encodeURIComponent(author)}&cht=bvg&chd=t:100`;
+window.open(url, '_system');
+}
 
 function roundRect(ctx, x, y, w, h, r){
   const rr = Math.min(r, w/2, h/2);
