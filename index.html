@@ -490,7 +490,7 @@ function saveQuoteAsImage(){
   const quote = document.getElementById('quoteText').textContent.replace(/[“”]/g, "");
   ctx.font = '800 46px system-ui, Segoe UI, Roboto, Arial';
   ctx.fillStyle = '#ffffff';
-  const lines = wrapText(ctx, `“${quote}”`, cardW - 120);
+  const lines = wrapText(ctx, quote, cardW - 120);
   const quoteHeight = lines.length * 58;               // total height of the text block
   let y = cardY + (cardH - quoteHeight) / 2;           // vertical center
   lines.forEach(line => {
