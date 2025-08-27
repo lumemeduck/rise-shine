@@ -337,7 +337,7 @@ const Router = {
 function renderHome(){
   const q = QUOTES[AppState.quoteIndex];
   const c = CHALLENGES[AppState.challengeIndex];
-  document.getElementById('quoteText').textContent = `“${q.t}”`;
+  document.getElementById('quoteText').textContent = q.t.replace(/[“”]/g, '');
   document.getElementById('quoteAuthor').textContent = q.a && q.a !== "—" ? q.a : "";
   document.getElementById('challengeText').textContent = c;
 
@@ -487,7 +487,7 @@ function saveQuoteAsImage(){
   ctx.fillText(dateStr, cardX + 40, cardY + 100);
 
   // Quote
-  const quote = document.getElementById('quoteText').textContent.replace(/^“|”$/g, '');
+  const quote = document.getElementById('quoteText').textContent.replace(/[“”]/g, '');
   ctx.font = '800 46px system-ui, Segoe UI, Roboto, Arial';
   ctx.fillStyle = '#ffffff';
   const lines = wrapText(ctx, `“${quote}”`, cardW - 120);
