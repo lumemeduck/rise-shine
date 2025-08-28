@@ -497,12 +497,10 @@ function saveQuoteAsImage(){
   // Quote
 const quote  = document.getElementById('quoteText').textContent.replace(/[“”]/g, '');
 const author = document.getElementById('quoteAuthor').textContent;
-
 ctx.font = '800 46px system-ui, Segoe UI, Roboto, Arial';
 ctx.fillStyle = '#eef1ff';
 ctx.textAlign = 'center';
 ctx.textBaseline = 'middle';
-
 const quoteLines = wrapText(ctx, quote, cardW - 120);
 const authorLine = `— ${author}`;
 const totalHeight = (quoteLines.length * 58) + 70;  // +70 for author spacing
@@ -515,8 +513,9 @@ quoteLines.forEach((line, i) => {
 
 // Author line
 ctx.font = '600 32px system-ui';
-ctx.fillText(authorLine, cardX + cardW / 2, startY + quoteLines.length * 58 + 32);
-
+const authorX = cardX + cardW - 40;      // 40 px from right edge
+ctx.fillText(authorLine, authorX, startY + quoteLines.length * 58 + 32);
+  
 // Reset alignments
 ctx.textAlign = 'start';
 ctx.textBaseline = 'alphabetic';
