@@ -495,26 +495,30 @@ function saveQuoteAsImage(){
   ctx.fillText(dateStr, cardX + 40, cardY + 100);
 
   // Quote
-  // ----- 1.  clean text -----
-const quote = document.getElementById('quoteText').textContent.replace(/[“”]/g, '');
+const quote  = document.getElementById('quoteText').textContent.replace(/[“”]/g, '');
+const author = document.getElementById('quoteAuthor').textContent;
 
-// ----- 2.  center horizontally & vertically -----
 ctx.font = '800 46px system-ui, Segoe UI, Roboto, Arial';
 ctx.fillStyle = '#eef1ff';
-ctx.textAlign = 'center';                // horizontal center
-ctx.textBaseline = 'middle';             // vertical center
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
 
-const lines = wrapText(ctx, quote, cardW - 120);
-const totalHeight = lines.length * 58;
-const startY = cardY + cardH / 2 - totalHeight / 2 + 29;   // 29 half line-height
+const quoteLines = wrapText(ctx, quote, cardW - 120);
+const authorLine = `— ${author}`;
+const totalHeight = (quoteLines.length * 58) + 70;  // +70 for author spacing
+const startY = cardY + cardH / 2 - totalHeight / 2 + 29;
 
-lines.forEach((line, i) => {
-  const y = startY + i * 58;
-  ctx.fillText(line, cardX + cardW / 2, y);
+// Quote lines
+quoteLines.forEach((line, i) => {
+  ctx.fillText(line, cardX + cardW / 2, startY + i * 58);
 });
 
-// Reset alignment for other elements
-ctx.textAlign = 'start';                 // back to left-align
+// Author line
+ctx.font = '600 32px system-ui';
+ctx.fillText(authorLine, cardX + cardW / 2, startY + quoteLines.length * 58 + 32);
+
+// Reset alignments
+ctx.textAlign = 'start';
 ctx.textBaseline = 'alphabetic';
 
   // Footer mark
