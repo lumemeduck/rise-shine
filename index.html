@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <title>Rise & Shine</title>
 <style>
   :root{
@@ -173,6 +174,43 @@
 
   /* Footer note */
   .footnote{ text-align:center; color:var(--muted); font-size:12px; margin-top:32px; }
+
+  /* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 64px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: linear-gradient(to top, rgba(15,18,32,.95), rgba(15,18,32,.7));
+  border-top: 1px solid rgba(255,255,255,.06);
+  backdrop-filter: blur(6px) saturate(120%);
+  z-index: 9999;
+}
+.nav-item {
+  flex: 1;
+  text-align: center;
+  color: #eef1ff;
+  font-size: 22px; /* icon size */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.nav-item span {
+  font-size: 11px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+.nav-item.active {
+  color: #9be6be; /* active highlight */
+}
+.nav-item:hover {
+  color: #9be6be;
+}
 
   /* Pretty reset-modal */
    .reset-modal {
@@ -386,6 +424,34 @@ const Router = {
     if (view === 'streak') renderCalendar();
   }
 };
+
+  // Bottom Nav Active State Sync
+function setActiveNav(tab) {
+  document.querySelectorAll('.bottom-nav .nav-item')
+    .forEach(el => el.classList.remove('active'));
+  const active = document.getElementById('nav' + tab);
+  if (active) active.classList.add('active');
+}
+
+// Hook into Router + external links
+window.addEventListener('hashchange', () => {
+  const hash = location.hash.replace('#','') || 'home';
+  setActiveNav(hash.charAt(0).toUpperCase() + hash.slice(1));
+});
+
+// Example external redirects for Trivia, Game, Profile
+document.getElementById('navTrivia').addEventListener('click', e=>{
+  e.preventDefault();
+  location.href = "https://your-free-trivia-link.com";
+});
+document.getElementById('navGame').addEventListener('click', e=>{
+  e.preventDefault();
+  location.href = "https://your-fun-puzzle-game.com";
+});
+document.getElementById('navProfile').addEventListener('click', e=>{
+  e.preventDefault();
+  location.href = "https://appcreator24-profile-link";
+});
 
 /* ---------- Rendering: Home ---------- */
 function renderHome(){
@@ -821,5 +887,12 @@ function closeShare() {
 
 document.addEventListener('DOMContentLoaded', init);
 </script>
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <a href="#home" id="navHome" class="nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="#trivia" id="navTrivia" class="nav-item"><i class="fas fa-question-circle"></i><span>Trivia</span></a>
+  <a href="#game" id="navGame" class="nav-item"><i class="fas fa-gamepad"></i><span>Game</span></a>
+  <a href="#profile" id="navProfile" class="nav-item"><i class="fas fa-user"></i><span>Profile</span></a>
+</nav>
 </body>
 </html>
