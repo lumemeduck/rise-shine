@@ -425,34 +425,6 @@ const Router = {
   }
 };
 
-  // Bottom Nav Active State Sync
-function setActiveNav(tab) {
-  document.querySelectorAll('.bottom-nav .nav-item')
-    .forEach(el => el.classList.remove('active'));
-  const active = document.getElementById('nav' + tab);
-  if (active) active.classList.add('active');
-}
-
-// Hook into Router + external links
-window.addEventListener('hashchange', () => {
-  const hash = location.hash.replace('#','') || 'home';
-  setActiveNav(hash.charAt(0).toUpperCase() + hash.slice(1));
-});
-
-// Example external redirects for Trivia, Game, Profile
-document.getElementById('navTrivia').addEventListener('click', e=>{
-  e.preventDefault();
-  location.href = "https://your-free-trivia-link.com";
-});
-document.getElementById('navGame').addEventListener('click', e=>{
-  e.preventDefault();
-  location.href = "https://your-fun-puzzle-game.com";
-});
-document.getElementById('navProfile').addEventListener('click', e=>{
-  e.preventDefault();
-  location.href = "https://appcreator24-profile-link";
-});
-
 /* ---------- Rendering: Home ---------- */
 function renderHome(){
   const q = QUOTES[AppState.quoteIndex];
@@ -885,6 +857,35 @@ function closeShare() {
   document.getElementById('shareModal').style.display = 'none';
 }
 
+  document.addEventListener('DOMContentLoaded', () => {
+  function setActiveNav(tab) {
+    document.querySelectorAll('.bottom-nav .nav-item')
+      .forEach(el => el.classList.remove('active'));
+    const active = document.getElementById('nav' + tab);
+    if (active) active.classList.add('active');
+  }
+
+  // Sync active state on hash change
+  window.addEventListener('hashchange', () => {
+    const hash = location.hash.replace('#','') || 'home';
+    setActiveNav(hash.charAt(0).toUpperCase() + hash.slice(1));
+  });
+
+  // External redirects
+  document.getElementById('navTrivia').addEventListener('click', e=>{
+    e.preventDefault();
+    location.href = "https://your-free-trivia-link.com";
+  });
+  document.getElementById('navGame').addEventListener('click', e=>{
+    e.preventDefault();
+    location.href = "https://your-fun-puzzle-game.com";
+  });
+  document.getElementById('navProfile').addEventListener('click', e=>{
+    e.preventDefault();
+    location.href = "https://appcreator24-profile-link";
+  });
+});
+  
 document.addEventListener('DOMContentLoaded', init);
 </script>
 <!-- Bottom Navigation -->
