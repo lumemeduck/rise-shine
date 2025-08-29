@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Rise &amp; Shine</title>
+<title>Rise & Shine</title>
 <style>
   :root{
     --bg:#0f1220;
@@ -30,6 +30,7 @@
     color:var(--text);
     font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
   }
+
   html, body {
   min-height: 100vh;
   background:
@@ -37,7 +38,7 @@
     radial-gradient(900px 900px at -10% 120%, rgba(102,229,181,.12), transparent 60%),
     #0f1220;
   background-attachment: fixed; /* keeps gradient fixed while you scroll */
-  }
+}
 
   /* Header */
   header{
@@ -77,7 +78,7 @@
 
   .actions{display:flex; gap:10px; align-items:center;}
   .btn{
-    appearance:none; border:none; cursor:pointer;
+    appearance:none; border:none; cursor:none;
     padding:8px 10px; border-radius:10px;
     background:linear-gradient(180deg, #202746, #161a2b);
     color:var(--text); font-weight:700; letter-spacing:.2px;
@@ -121,7 +122,7 @@
     font-size:18px; line-height:1.35; font-weight:700;
     letter-spacing:.2px;
   }
-  .author{ color:#c5c9df; font-size:12px; font-weight:600; margin-bottom:22px; }
+  .author{ color:#c5c9df; font-size:12px; font-weight:400; margin-bottom:22px; }
 
   .row{ display:flex; gap:10px; flex-wrap:wrap; }
   .row .btn{ flex: 0 0 auto; }
@@ -144,7 +145,7 @@
   }
   .cal-title{ font-weight:800; letter-spacing:.3px; }
   .cal-nav{ display:flex; gap:8px; }
-  .cal-btn{ padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#151a2a; color:var(--text); cursor:pointer; }
+  .cal-btn{ padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#151a2a; color:var(--text); cursor:none; }
   .calendar{
     display:grid; grid-template-columns: repeat(7, 1fr); gap:8px; padding:8px; border-radius:14px;
     background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
@@ -171,10 +172,54 @@
   .dot.ok{ background:rgba(102,229,181,.35); border-color:rgba(102,229,181,.55); }
 
   /* Footer note */
-  .footnote{ text-align:center; color:var(--muted); font-size:12px; margin-top:12px; }
+  .footnote{ text-align:center; color:var(--muted); font-size:12px; margin-top:32px; }
+
+  /* Pretty reset-modal */
+   .reset-modal {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.8);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+}
+   .reset-box {
+  background: #161a2b; border: 1px solid rgba(255,255,255,.1);
+  color: #eef1ff; font-family:system-ui; border-radius: 12px;
+  padding: 22px 28px; text-align: center;
+  max-width: 280px;
+}
+   .reset-box button { appearance: none;
+  margin: 16px 12px 0; padding: 8px 10px;
+  border: none; border-radius: 10px;
+  font-weight: 700; cursor: none; box-shadow: var(--shadow); border:1px solid rgba(255,255,255,.07); transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease;
+}
+   .btn-ok { appearance:none; border:none; cursor:none;
+    padding:8px 10px; border-radius:10px;
+    background:linear-gradient(180deg, #202746, #161a2b);
+    color:var(--text); font-weight:700; letter-spacing:.2px;
+    box-shadow: var(--shadow);
+    border:1px solid rgba(255,255,255,.07);
+    transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease; }
+   .btn-cancel { appearance:none; border:none; cursor:none;
+    padding:8px 10px; border-radius:10px;
+    background:linear-gradient(180deg, #202746, #161a2b);
+    color:var(--text); font-weight:700; letter-spacing:.2px;
+    box-shadow: var(--shadow);
+    border:1px solid rgba(255,255,255,.07);
+    transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease; }
+   .btn-ok:hover{ transform: translateY(-1px); border-color: var(--ring); box-shadow: 0 12px 40px rgba(153,167,255,.14); }
+   .btn-cancel:hover{ transform: translateY(-1px); border-color: var(--ring); box-shadow: 0 12px 40px rgba(153,167,255,.14); }
 </style>
 </head>
 <body>
+<!-- Pretty share-modal -->
+<div id="shareModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:#161a2b;border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px 28px;max-width:320px;text-align:center;color:#eef1ff;font-family:system-ui;">
+    <h3 style="margin:0 0 12px;font-size:18px;">Share Quote</h3>
+    <p id="shareText" style="margin:0 0 20px;font-size:15px;line-height:1.4;"></p>
+    <button class="btn" onclick="copyShare()" style="margin-right:18px;">Copy</button>
+    <button class="btn" onclick="closeShare()">Close</button>
+  </div>
+</div>
   <header>
     <div class="nav">
       <div class="brand" role="button" onclick="Router.go('#home')" title="Go Home">
@@ -194,19 +239,20 @@
       <div class="grid">
         <!-- Quotes column -->
         <article class="card" aria-live="polite">
-          <h2>✨ Today's Motivation<span class="pill" id="quoteTag">Today</span></h2>
+          <h2 id="home-title">✨ Today's Motivation <span class="pill" id="quoteTag">Today</span></h2>
           <div id="quoteText" class="quote">Loading…</div>
           <div id="quoteAuthor" class="author" style="text-align:right; margin-right:20px">LMD Quotes</div>
           <div class="row">
             <button class="btn" id="btnNewQuote" title="Shuffle today's quote">More Quote</button>
-            <button class="btn" id="btnSaveQuote" title="Save quote as image">Share as image</button>
+            <button type="button" class="btn" onclick="shareQuote()" title="Share quote text">Share</button>
+            <button class="btn" id="btnSaveQuote" title="Save quote as image">Create image</button>
           </div>
           <p class="muted" style="margin-top:10px;"></p>
         </article>
 
         <!-- Exercise column -->
         <article class="card" aria-live="polite">
-          <h2>🏋️ Today's Challenge<span class="pill" id="challengeTag">Today</span></h2>
+          <h2>🏋️ Today's Challenge <span class="pill" id="challengeTag">Today</span></h2>
           <div id="challengeText" class="challenge">Loading…</div>
           <div class="row">
             <button class="btn" id="btnNewChallenge" title="Shuffle today’s challenge">More Challenge</button>
@@ -217,7 +263,7 @@
         </article>
       </div>
 
-      <p class="footnote"><a href="https://www.e-droid.net/privacy.php?ida=3714260&idl=en" target="_blank" style="text-decoration:none; color:#aab0c3">Privacy policy</a></p>
+      <p class="footnote"><a href="https://www.e-droid.net/privacy.php?ida=3714260&idl=en" target="_blank" style="text-decoration:none; color:#aab0c3; cursor:none">Privacy policy</a></p>
     </section>
 
     <!-- STREAK VIEW -->
@@ -297,19 +343,19 @@ const QUOTES = [
 const CHALLENGES = [
   "Walk briskly for 20 minutes.",
   "Do 3 sets of 15 squats.",
-  "Hold a 60-second plank (x3).",
-  "20 push-ups (break into sets).",
-  "Stretch full body for 10 minutes.",
-  "Jumping jacks 3 times for 60 seconds each.",
-  "15 burpees (any pace).",
+  "Hold a 60-second plank for 3 sections.",
+  "Do 20 push-ups (break into 3 sets).",
+  "Stretch your full body for 10 minutes.",
+  "Do jumping jacks for 60 seconds 3 times.",
+  "Do 15 burpees (any pace).",
   "Climb stairs for 10 minutes.",
-  "Slow jog for 15 minutes.",
-  "Core circuit: 20 crunches for 3 times.",
-  "Glute bridges 3×20.",
-  "Wall-sit: 45 seconds ×3.",
-  "Yoga flow for 15 minutes.",
-  "Shadow boxing 10 minutes.",
-  "Balance drill: single-leg stand 60s each."
+  "Do slow jog for 15 minutes.",
+  "Core circuit: do 20 crunches 3 times.",
+  "Do 20 glute bridges 3 times.",
+  "Wall-sit: do 45 seconds 3 times.",
+  "Do yoga flow for 15 minutes.",
+  "Do shadow boxing for 10 minutes.",
+  "Balance drill: do a single-leg stand for 60 seconds."
 ];
 
 /* ---------- Daily Selection (deterministic per day unless shuffled) ---------- */
@@ -377,7 +423,7 @@ function renderCalendar(){
   dow.forEach(d=>{
     const el = document.createElement('div');
     el.className='dow';
-    el.setAttribute('role','columnheader');
+   el.setAttribute('role','columnheader');
     el.textContent = d;
     cal.appendChild(el);
   });
@@ -422,6 +468,7 @@ function shuffleQuoteForToday(){
   AppState.quoteIndex = next;
   renderHome();
 }
+  
 function shuffleChallengeForToday(){
   const k = STORAGE.dailyKey('challenge');
   const next = Math.floor(Math.random() * CHALLENGES.length);
@@ -441,15 +488,29 @@ function markTodayCompleted(){
   renderCalendar();
 }
 
-function resetAll(){
-  if (!confirm("Reset all quotes, challenges, and streak progress?")) return;
-  STORAGE.clearAll();
-  AppState.completedDays = {};
-  STORAGE.set('completedDays', AppState.completedDays);
-  // Re-pick today's items
-  const q = pickDaily('quote', QUOTES); AppState.quoteIndex = q.idx;
-  const c = pickDaily('challenge', CHALLENGES); AppState.challengeIndex = c.idx;
-  renderHome(); renderCalendar();
+function resetAll() {
+  // build modal
+  const modal = document.createElement('div');
+  modal.className = 'reset-modal';
+  modal.innerHTML = `
+    <div class="reset-box">
+      <div>Delete Your Streak?</div>
+      <button class="btn-ok" onclick="doReset()">Reset</button>
+      <button class="btn-cancel" onclick="closeReset()">Cancel</button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  // actual reset
+  window.doReset = () => {
+    localStorage.removeItem('completedDays');
+    localStorage.removeItem('quote_' + DateUtil.ymd());
+    localStorage.removeItem('challenge_' + DateUtil.ymd());
+    AppState.completedDays = {};
+    renderHome(); renderCalendar();
+    closeReset();
+  };
+  window.closeReset = () => modal.remove();
 }
 
 /* ---------- Quote Image Export ---------- */
@@ -495,35 +556,35 @@ function saveQuoteAsImage(){
   ctx.fillText(dateStr, cardX + 40, cardY + 100);
 
   // Quote
-const quote  = document.getElementById('quoteText').textContent.replace(/[“”]/g, '');
-const author = document.getElementById('quoteAuthor').textContent;
-ctx.font = '800 46px system-ui, Segoe UI, Roboto, Arial';
-ctx.fillStyle = '#eef1ff';
-ctx.textAlign = 'center';
-ctx.textBaseline = 'middle';
-const quoteLines = wrapText(ctx, quote, cardW - 120);
-const authorLine = `— ${author}`;
-const totalHeight = (quoteLines.length * 58) + 70;  // +70 for author spacing
-const startY = cardY + cardH / 2 - totalHeight / 2 + 29;
+  const quote  = document.getElementById('quoteText').textContent.replace(/[“”]/g, '');
+  const author = document.getElementById('quoteAuthor').textContent;
+  ctx.font = '800 46px system-ui, Segoe UI, Roboto, Arial';
+  ctx.fillStyle = '#eef1ff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const quoteLines = wrapText(ctx, quote, cardW - 120);
+  const authorLine = `— ${author}`;
+  const totalHeight = (quoteLines.length * 58) + 70;  // +70 for author spacing
+  const startY = cardY + cardH / 2 - totalHeight / 2 + 29;
 
-// Quote lines
-quoteLines.forEach((line, i) => {
+  // Quote lines
+  quoteLines.forEach((line, i) => {
   ctx.fillText(line, cardX + cardW / 2, startY + i * 58);
-});
+  });
 
-// Author line
-ctx.font      = '600 30px system-ui';
-ctx.fillStyle = '#eef1ff';
-ctx.textAlign = 'right';               // right edge
-ctx.fillText(
+  // Author line
+  ctx.font      = '600 30px system-ui';
+  ctx.fillStyle = '#eef1ff';
+  ctx.textAlign = 'right';               // right edge
+  ctx.fillText(
   authorLine,
   cardX + cardW - 120,                  // 120 px from right edge
   startY + quoteLines.length * 58 + 32 // same vertical spot
-);
+  );
   
-// Reset alignments
-ctx.textAlign = 'start';
-ctx.textBaseline = 'alphabetic';
+  // Reset alignments
+  ctx.textAlign = 'start';
+  ctx.textBaseline = 'alphabetic';
 
   // Footer mark
   ctx.font = "700 20px system-ui, Segoe UI, Roboto, Arial";
@@ -534,16 +595,11 @@ ctx.textBaseline = 'alphabetic';
   drawSun(ctx, cardX + cardW - 110, cardY + 110, 44);
 
   // Download
-  const url = canvas.toDataURL("image/png");
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `rise-and-shine-${DateUtil.ymd()}.png`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  }
+  const dataURL = canvas.toDataURL('image/png');
+  uploadToFileHost(dataURL);
+}
 
-function roundRect(ctx, x, y, w, h, r){
+  function roundRect(ctx, x, y, w, h, r){
   const rr = Math.min(r, w/2, h/2);
   ctx.beginPath();
   ctx.moveTo(x+rr, y);
@@ -554,7 +610,7 @@ function roundRect(ctx, x, y, w, h, r){
   ctx.closePath();
 }
 
-function wrapText(ctx, text, maxWidth){
+  function wrapText(ctx, text, maxWidth){
   const words = text.split(' ');
   const lines = [];
   let line = '';
@@ -595,6 +651,73 @@ function drawSun(ctx, x, y, r){
     ctx.stroke();
   }
   ctx.restore();
+}
+
+function uploadToFileHost(dataURL) {
+  // Show waiting prompt immediately
+  document.body.style.margin = "0";
+  document.body.style.background = "#0f1220";
+  document.body.innerHTML = `
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px;color:white;font-family:sans-serif;text-align:center;">
+      <div class="spinner" style="
+        width:40px;height:40px;
+        border:4px solid rgba(255,255,255,0.2);
+        border-top:4px solid #EEF1FF;
+        border-radius:50%;
+        animation:spin 1s linear infinite;">
+      </div>
+      <p style="font-size:16px;opacity:0.9;">Generating image...</p>
+    </div>
+    <style>
+      @keyframes spin {
+        from { transform:rotate(0deg); }
+        to { transform:rotate(360deg); }
+      }
+    </style>
+  `;
+
+  // Prepare upload
+  const blob = dataURLToBlob(dataURL);
+  const fd = new FormData();
+  fd.append('file', blob, `quote-${Date.now()}.png`);
+
+  fetch('https://tmpfiles.org/api/v1/upload', { method: 'POST', body: fd })
+    .then(r => r.json())
+    .then(res => {
+      let url = res.data?.url || res.data || res.url;
+      if (url && !url.includes('/dl/')) {
+        url = url.replace('tmpfiles.org', 'tmpfiles.org/dl');
+      }
+      if (!url) {
+        alert('Upload succeeded but no file URL returned.');
+        return;
+      }
+
+      // Replace waiting prompt with image + fallback note
+      document.body.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px;color:white;font-family:sans-serif;text-align:center;">
+          <img src="${url}" style="max-width:90%;height:auto;border-radius:0;box-shadow:0 0 10px rgba(0,0,0,0.5);" />
+          <p style="font-size:14px;max-width:90%;opacity:0.8;">
+            🔆 If a download doesn’t start, tap-hold the image above and tap <strong>save</strong> on the pop-up screen<br><br>*swipe-down to refresh after download*
+          </p>
+        </div>
+      `;
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Upload failed. Share as text instead.');
+    });
+}
+
+function dataURLToBlob(dataURL) {
+  const arr = dataURL.split(',');
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const byteStr = atob(arr[1]);
+  const ab = new Uint8Array(byteStr.length);
+  for (let i = 0; i < byteStr.length; i++) {
+    ab[i] = byteStr.charCodeAt(i);
+  }
+  return new Blob([ab], { type: mime });
 }
 
 /* ---------- Init ---------- */
@@ -642,6 +765,60 @@ function init(){
   renderCalendar();
   Router.sync();
 }
+
+function shareQuote() {
+  const text = `"${document.getElementById('quoteText').textContent}" — ${document.getElementById('quoteAuthor').textContent}`;
+
+  if (navigator.share) {
+    navigator.share({ title: 'Rise & Shine', text });
+    return;
+  }
+
+  // Show our styled modal instead of the ugly prompt
+  const modal  = document.getElementById('shareModal');
+  const output = document.getElementById('shareText');
+  output.textContent = text;
+  modal.style.display = 'flex';
+}
+
+function copyShare() {
+  const text = document.getElementById('shareText').textContent;
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      // Create a tiny toast
+const toast = document.createElement('div');
+toast.textContent = '✔ Copied';
+toast.style.cssText =
+  'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);' +
+  'background:#0f1220;color:#9be6be;font-weight:bold;padding:8px 16px;' +
+  'border-radius:8px;z-index:9999;animation:fade 2.5s forwards;';
+document.body.appendChild(toast);
+
+// Remove after fade
+setTimeout(() => document.body.removeChild(toast), 2500);
+
+// Optional CSS keyframe
+const style = document.createElement('style');
+style.textContent = '@keyframes fade{0%{opacity:1}80%{opacity:1}100%{opacity:0}}';
+document.head.appendChild(style);
+      closeShare();
+    })
+    .catch(() => {
+      // last resort fallback for *very* old WebViews
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position='fixed'; ta.style.opacity=0;
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      alert('✔ Copied!');
+      closeShare();
+    });
+}
+
+function closeShare() {
+  document.getElementById('shareModal').style.display = 'none';
+}
+
 document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
