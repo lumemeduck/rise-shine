@@ -83,7 +83,7 @@
   background:linear-gradient(180deg, #ffffff, #f3f4f6);
   color:var(--text); font-weight:700; letter-spacing:.2px;
   box-shadow: var(--shadow);
-  border:1px solid rgba(0,0,0,.07);
+  border:1px solid rgba(0,0,0,.09);
   transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease;
 }
  .btn:hover{ transform: translateY(-1px); border-color: var(--ring); box-shadow: 0 12px 40px rgba(99,102,241,.14); }
@@ -694,7 +694,7 @@ function uploadToFileHost(dataURL) {
 
       // Replace waiting prompt with image + fallback note
       document.body.innerHTML = `
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px;color:white;font-family:sans-serif;text-align:center;">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px;color:#22c55e;font-family:sans-serif;text-align:center;">
           <img src="${url}" style="max-width:90%;height:auto;border-radius:0;box-shadow:0 0 10px rgba(0,0,0,0.5);" />
           <p style="font-size:14px;max-width:90%;opacity:0.8;">
             🔆 If a download doesn’t start, tap-hold the image above and tap <strong>save</strong> on the pop-up screen<br><br>*swipe-down to refresh after download*
@@ -789,7 +789,7 @@ const toast = document.createElement('div');
 toast.textContent = '✔ Copied';
 toast.style.cssText =
   'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);' +
-  'background:#ffffff;color:#22c55e;border:1px solid rgba(0,0,0,.08);font-weight:bold;padding:8px 16px;' +
+  'background:#ffffff;color:#22c55e;border:1px solid rgba(0,0,0,.1);font-weight:bold;padding:8px 16px;' +
   'border-radius:8px;z-index:9999;animation:fade 2.5s forwards;';
 document.body.appendChild(toast);
 
