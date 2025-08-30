@@ -9,7 +9,7 @@
     --bg:#f5f7ff;
     --card:#ffffff;
     --muted:#6b7280;
-    --text:#333333;
+    --text:#1a1a1a;
     --accent:#0ea5e9;
     --accent-2:#6366f1;
     --warn:#f59e0b;
@@ -559,7 +559,7 @@ function saveQuoteAsImage(){
 
   // Title/brand
   ctx.font = "bold 38px system-ui, Segoe UI, Roboto, Arial";
-  ctx.fillStyle = "#333333";
+  ctx.fillStyle = "#1a1a1a";
   ctx.fillText("Rise & Shine", cardX + 40, cardY + 70);
   ctx.font = "600 22px system-ui, Segoe UI, Roboto, Arial";
   ctx.fillStyle = "rgba(75,85,99,.9)";
@@ -570,7 +570,7 @@ function saveQuoteAsImage(){
   const quote  = document.getElementById('quoteText').textContent.replace(/[“”]/g, '');
   const author = document.getElementById('quoteAuthor').textContent;
   ctx.font = '800 46px system-ui, Segoe UI, Roboto, Arial';
-  ctx.fillStyle = '#333333';
+  ctx.fillStyle = '#1a1a1a';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   const quoteLines = wrapText(ctx, quote, cardW - 120);
@@ -585,7 +585,7 @@ function saveQuoteAsImage(){
 
   // Author line
   ctx.font      = '600 30px system-ui';
-  ctx.fillStyle = '#333333';
+  ctx.fillStyle = '#1a1a1a';
   ctx.textAlign = 'right';               // right edge
   ctx.fillText(
   authorLine,
