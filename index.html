@@ -144,9 +144,9 @@
   }
   .cal-title{ font-weight:800; letter-spacing:.3px; }
   .cal-nav{ display:flex; gap:8px; }
-  .cal-btn{ padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, #ffffff, #f3f4f6); color:var(--text); cursor:none; 
+  .cal-btn{ padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.1); background:linear-gradient(180deg, #ffffff, #f3f4f6); color:var(--text); cursor:none; 
     box-shadow: var(--shadow);
-    border:1px solid rgba(0,0,0,.07);
+    border:1px solid rgba(0,0,0,.1);
     transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease;}
    .cal-btn:hover{ transform: translateY(-1px); border-color: var(--ring); box-shadow: 0 12px 40px rgba(99,102,241,.14); }
   .calendar{
@@ -160,7 +160,7 @@
   }
   .dow{ color:var(--muted); font-weight:800; border:none; padding:6px 0; }
   .day{ min-height:58px; display:flex; align-items:center; justify-content:center; position:relative; }
-  .day.muted{ opacity:.65; }
+  .day.muted{ opacity:1.0; }
   .day .n{ position:absolute; top:6px; left:8px; font-size:12px; color:var(--muted); }
   .day.done{
   background:
@@ -171,7 +171,7 @@
    }
   .day.today{ outline: 2px dashed rgba(153,167,255,.55); outline-offset:2px; }
   .legend{ display:flex; gap:10px; align-items:center; margin-top:12px; color:var(--muted); font-size:12px; }
-  .dot{ width:12px; height:12px; border-radius:3px; background:#1a2139; border:1px solid rgba(255,255,255,.1); }
+  .dot{ width:12px; height:12px; border-radius:3px; background:#6b7280; border:1px solid rgba(255,255,255,.1); }
   .dot.ok{ background:rgba(102,229,181,.35); border-color:rgba(102,229,181,.55); }
 
   /* Footer note */
