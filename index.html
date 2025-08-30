@@ -83,7 +83,7 @@
   background:linear-gradient(180deg, #ffffff, #f3f4f6);
   color:var(--text); font-weight:700; letter-spacing:.2px;
   box-shadow: var(--shadow);
-  border:1px solid rgba(0,0,0,.09);
+  border:1px solid rgba(0,0,0,.1);
   transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease;
 }
  .btn:hover{ transform: translateY(-1px); border-color: var(--ring); box-shadow: 0 12px 40px rgba(99,102,241,.14); }
@@ -186,27 +186,35 @@
   padding: 22px 28px; text-align: center;
   max-width: 280px;
 }
-   .reset-box button { appearance: none;
-  margin: 16px 12px 0; padding: 8px 10px;
-  border: none; border-radius: 10px;
-  font-weight: 700; cursor: none; box-shadow: var(--shadow); border:1px solid rgba(255,255,255,.07); transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease;
-}
-   .btn-ok { appearance:none; border:none; cursor:none;
-    padding:8px 10px; border-radius:10px;
-    background:linear-gradient(180deg, #202746, #161a2b);
-    color:var(--text); font-weight:700; letter-spacing:.2px;
-    box-shadow: var(--shadow);
-    border:1px solid rgba(255,255,255,.07);
-    transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease; }
-   .btn-cancel { appearance:none; border:none; cursor:none;
-    padding:8px 10px; border-radius:10px;
-    background:linear-gradient(180deg, #202746, #161a2b);
-    color:var(--text); font-weight:700; letter-spacing:.2px;
-    box-shadow: var(--shadow);
-    border:1px solid rgba(255,255,255,.07);
-    transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease; }
-   .btn-ok:hover{ transform: translateY(-1px); border-color: var(--ring); box-shadow: 0 12px 40px rgba(153,167,255,.14); }
-   .btn-cancel:hover{ transform: translateY(-1px); border-color: var(--ring); box-shadow: 0 12px 40px rgba(153,167,255,.14); }
+   .reset-box button {
+  appearance:none; border:none; cursor:none;
+  padding:8px 10px; border-radius:10px;
+  background:linear-gradient(180deg, #ffffff, #f3f4f6);
+  color:var(--text); font-weight:700; letter-spacing:.2px;
+  box-shadow: var(--shadow);
+  border:1px solid rgba(0,0,0,.1);
+  transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease;
+   }
+   .btn-ok {
+  appearance:none; border:none; cursor:none;
+  padding:8px 10px; border-radius:10px;
+  background:linear-gradient(180deg, #ffffff, #f3f4f6);
+  color:var(--text); font-weight:700; letter-spacing:.2px;
+  box-shadow: var(--shadow);
+  border:1px solid rgba(0,0,0,.1);
+  transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease;
+   }
+   .btn-cancel {
+  appearance:none; border:none; cursor:none;
+  padding:8px 10px; border-radius:10px;
+  background:linear-gradient(180deg, #ffffff, #f3f4f6);
+  color:var(--text); font-weight:700; letter-spacing:.2px;
+  box-shadow: var(--shadow);
+  border:1px solid rgba(0,0,0,.1);
+  transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease;
+   }
+   .btn-ok:hover { transform: translateY(-1px); border-color: var(--ring); box-shadow: 0 12px 40px rgba(99,102,241,.14); }
+   .btn-cancel:hover{ transform: translateY(-1px); border-color: var(--ring); box-shadow: 0 12px 40px rgba(99,102,241,.14); }
 </style>
 </head>
 <body>
@@ -665,7 +673,7 @@ function uploadToFileHost(dataURL) {
         border-radius:50%;
         animation:spin 1s linear infinite;">
       </div>
-      <p style="font-size:16px;opacity:0.9;">Generating image...</p>
+      <p style="font-size:16px;color:#111827;opacity:0.9;">Generating image...</p>
     </div>
     <style>
       @keyframes spin {
@@ -694,7 +702,7 @@ function uploadToFileHost(dataURL) {
 
       // Replace waiting prompt with image + fallback note
       document.body.innerHTML = `
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px;color:#22c55e;font-family:sans-serif;text-align:center;">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px;color:#111827;font-family:sans-serif;text-align:center;">
           <img src="${url}" style="max-width:90%;height:auto;border-radius:0;box-shadow:0 0 10px rgba(0,0,0,0.5);" />
           <p style="font-size:14px;max-width:90%;opacity:0.8;">
             🔆 If a download doesn’t start, tap-hold the image above and tap <strong>save</strong> on the pop-up screen<br><br>*swipe-down to refresh after download*
@@ -789,7 +797,7 @@ const toast = document.createElement('div');
 toast.textContent = '✔ Copied';
 toast.style.cssText =
   'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);' +
-  'background:#ffffff;color:#22c55e;border:1px solid rgba(0,0,0,.1);font-weight:bold;padding:8px 16px;' +
+  'background:#ffffff;color:#22c55e;border:1px solid rgba(0,0,0,0.8);font-weight:bold;padding:8px 16px;' +
   'border-radius:8px;z-index:9999;animation:fade 2.5s forwards;';
 document.body.appendChild(toast);
 
