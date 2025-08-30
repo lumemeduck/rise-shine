@@ -144,7 +144,11 @@
   }
   .cal-title{ font-weight:800; letter-spacing:.3px; }
   .cal-nav{ display:flex; gap:8px; }
-  .cal-btn{ padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, #ffffff, #f3f4f6); color:var(--text); cursor:none; }
+  .cal-btn{ padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, #ffffff, #f3f4f6); color:var(--text); cursor:none; 
+    box-shadow: var(--shadow);
+    border:1px solid rgba(0,0,0,.07);
+    transition:.2s transform ease, .2s border-color ease, .2s background ease, .2s box-shadow ease;}
+   .cal-btn:hover{ transform: translateY(-1px); border-color: var(--ring); box-shadow: 0 12px 40px rgba(99,102,241,.14); }
   .calendar{
     display:grid; grid-template-columns: repeat(7, 1fr); gap:8px; padding:8px; border-radius:14px;
     background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
