@@ -549,7 +549,7 @@ function saveQuoteAsImage(){
   roundRect(ctx, cardX, cardY, cardW, cardH, cardR);
   ctx.fillStyle = "rgba(255,255,255,.9)";
   ctx.fill();
-  ctx.strokeStyle = "rgba(0,0,0,.08)";
+  ctx.strokeStyle = "rgba(0,0,0,.1)";
   ctx.lineWidth = 2;
   ctx.stroke();
 
@@ -566,7 +566,7 @@ function saveQuoteAsImage(){
   const quote  = document.getElementById('quoteText').textContent.replace(/[“”]/g, '');
   const author = document.getElementById('quoteAuthor').textContent;
   ctx.font = '800 46px system-ui, Segoe UI, Roboto, Arial';
-  ctx.fillStyle = '#eef1ff';
+  ctx.fillStyle = '#111827';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   const quoteLines = wrapText(ctx, quote, cardW - 120);
@@ -581,7 +581,7 @@ function saveQuoteAsImage(){
 
   // Author line
   ctx.font      = '600 30px system-ui';
-  ctx.fillStyle = '#eef1ff';
+  ctx.fillStyle = '#111827';
   ctx.textAlign = 'right';               // right edge
   ctx.fillText(
   authorLine,
@@ -595,7 +595,7 @@ function saveQuoteAsImage(){
 
   // Footer mark
   ctx.font = "700 20px system-ui, Segoe UI, Roboto, Arial";
-  ctx.fillStyle = "rgba(200,210,255,.9)";
+  ctx.fillStyle = "rgba(75,85,99,.9)";
   ctx.fillText("Powered by: @lumeme_duck", cardX + 40, cardY + cardH - 50);
 
   // Decorative corner sun
