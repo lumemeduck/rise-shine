@@ -180,13 +180,13 @@
   /* Pretty reset-modal */
    .reset-modal {
   position: fixed; inset: 0;
-  background: rgba(255,255,255,.8);
+  background: #eef1ff;
   display: flex; align-items: center; justify-content: center;
   z-index: 9999;
 }
    .reset-box {
   background: rgba(153,167,255,.55); border: 1px solid rgba(0,0,0,.1);
-  color: #111827; font-family:system-ui; border-radius: 12px;
+  color: #454545; font-family:system-ui; border-radius: 12px;
   padding: 22px 28px; text-align: center;
   max-width: 280px;
 }
@@ -224,7 +224,7 @@
 <body>
 <!-- Pretty share-modal -->
 <div id="shareModal" style="display:none;position:fixed;inset:0;background:rgba(255,255,255,.8);z-index:999;align-items:center;justify-content:center;">
-  <div style="background:rgba(153,167,255,.55);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px 28px;max-width:320px;text-align:center;color:#111827;font-family:system-ui;">
+  <div style="background:#eef1ff;border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px 28px;max-width:320px;text-align:center;color:#454545;font-family:system-ui;">
     <h3 style="margin:0 0 12px;font-size:18px;">Share Quote</h3>
     <p id="shareText" style="margin:0 0 20px;font-size:15px;line-height:1.4;"></p>
     <button class="btn" onclick="copyShare()" style="margin-right:18px;">Copy</button>
@@ -505,7 +505,7 @@ function resetAll() {
   modal.className = 'reset-modal';
   modal.innerHTML = `
     <div class="reset-box">
-      <div>Delete Your Streak?</div>
+      <div>Delete your streak?</div>
       <button class="btn-ok" onclick="doReset()">Reset</button>
       <button class="btn-cancel" onclick="closeReset()">Cancel</button>
     </div>
@@ -559,7 +559,7 @@ function saveQuoteAsImage(){
 
   // Title/brand
   ctx.font = "bold 38px system-ui, Segoe UI, Roboto, Arial";
-  ctx.fillStyle = "#1a1a1a";
+  ctx.fillStyle = "rgba(75,85,99,.9)";
   ctx.fillText("Rise & Shine", cardX + 40, cardY + 70);
   ctx.font = "600 22px system-ui, Segoe UI, Roboto, Arial";
   ctx.fillStyle = "rgba(75,85,99,.9)";
@@ -570,7 +570,7 @@ function saveQuoteAsImage(){
   const quote  = document.getElementById('quoteText').textContent.replace(/[“”]/g, '');
   const author = document.getElementById('quoteAuthor').textContent;
   ctx.font = '800 46px system-ui, Segoe UI, Roboto, Arial';
-  ctx.fillStyle = '#1a1a1a';
+  ctx.fillStyle = 'rgba(75,85,99,.9)';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   const quoteLines = wrapText(ctx, quote, cardW - 120);
@@ -585,7 +585,7 @@ function saveQuoteAsImage(){
 
   // Author line
   ctx.font      = '600 30px system-ui';
-  ctx.fillStyle = '#1a1a1a';
+  ctx.fillStyle = 'rgba(75,85,99,.9)';
   ctx.textAlign = 'right';               // right edge
   ctx.fillText(
   authorLine,
@@ -677,7 +677,7 @@ function uploadToFileHost(dataURL) {
         border-radius:50%;
         animation:spin 1s linear infinite;">
       </div>
-      <p style="font-size:16px;color:#111827;opacity:0.9;">Generating image...</p>
+      <p style="font-size:16px;color:#454545;">Generating image...</p>
     </div>
     <style>
       @keyframes spin {
@@ -706,7 +706,7 @@ function uploadToFileHost(dataURL) {
 
       // Replace waiting prompt with image + fallback note
       document.body.innerHTML = `
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px;color:#111827;font-family:sans-serif;text-align:center;">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px;color:#454545;font-family:sans-serif;text-align:center;">
           <img src="${url}" style="max-width:90%;height:auto;border-radius:0;box-shadow:0 0 10px rgba(0,0,0,0.5);" />
           <p style="font-size:14px;max-width:90%;opacity:0.8;">
             🔆 If a download doesn’t start, tap-hold the image above and tap <strong>save</strong> on the pop-up screen<br><br>*swipe-down to refresh after download*
@@ -801,7 +801,7 @@ const toast = document.createElement('div');
 toast.textContent = '✔ Copied';
 toast.style.cssText =
   'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);' +
-  'background:#ffffff;color:#22c55e;border:1px solid rgba(0,0,0,0.8);font-weight:bold;padding:8px 16px;' +
+  'background:#eef1ff;color:#22c55e;border:1px solid rgba(0,0,0,0.8);font-weight:bold;padding:8px 16px;' +
   'border-radius:8px;z-index:9999;animation:fade 2.5s forwards;';
 document.body.appendChild(toast);
 
