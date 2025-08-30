@@ -112,7 +112,7 @@
   .pill{
     display:inline-flex; align-items:center; gap:8px;
     padding:6px 10px; border-radius:999px;
-    background:rgba(153,167,255,.12); color:#cfd6ff; font-size:11px; font-weight:600;
+    background:rgba(153,167,255,.12); color:rgb(75,85,99,.9); font-size:11px; font-weight:600;
     border:1px solid rgba(153,167,255,.25);
   }
 
@@ -121,7 +121,7 @@
     font-size:18px; line-height:1.35; font-weight:700;
     letter-spacing:.2px;
   }
-  .author{ color:#c5c9df; font-size:12px; font-weight:400; margin-bottom:22px; }
+  .author{ color:rgb(75,85,99.9); font-size:12px; font-weight:400; margin-bottom:22px; }
 
   .row{ display:flex; gap:10px; flex-wrap:wrap; }
   .row .btn{ flex: 0 0 auto; }
@@ -144,7 +144,7 @@
   }
   .cal-title{ font-weight:800; letter-spacing:.3px; }
   .cal-nav{ display:flex; gap:8px; }
-  .cal-btn{ padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#151a2a; color:var(--text); cursor:none; }
+  .cal-btn{ padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, #ffffff, #f3f4f6); color:var(--text); cursor:none; }
   .calendar{
     display:grid; grid-template-columns: repeat(7, 1fr); gap:8px; padding:8px; border-radius:14px;
     background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
@@ -181,7 +181,7 @@
   z-index: 9999;
 }
    .reset-box {
-  background: #ffffff; border: 1px solid rgba(0,0,0,.1);
+  background: #6b7280; border: 1px solid rgba(0,0,0,.1);
   color: #111827; font-family:system-ui; border-radius: 12px;
   padding: 22px 28px; text-align: center;
   max-width: 280px;
@@ -220,7 +220,7 @@
 <body>
 <!-- Pretty share-modal -->
 <div id="shareModal" style="display:none;position:fixed;inset:0;background:rgba(255,255,255,.8);z-index:999;align-items:center;justify-content:center;">
-  <div style="background:#ffffff;border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px 28px;max-width:320px;text-align:center;color:#111827;font-family:system-ui;">
+  <div style="background:#6b7280;border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px 28px;max-width:320px;text-align:center;color:#111827;font-family:system-ui;">
     <h3 style="margin:0 0 12px;font-size:18px;">Share Quote</h3>
     <p id="shareText" style="margin:0 0 20px;font-size:15px;line-height:1.4;"></p>
     <button class="btn" onclick="copyShare()" style="margin-right:18px;">Copy</button>
@@ -270,7 +270,7 @@
         </article>
       </div>
 
-      <p class="footnote"><a href="https://www.e-droid.net/privacy.php?ida=3714260&idl=en" target="_blank" style="text-decoration:none; color:#aab0c3; cursor:none">Privacy policy</a></p>
+      <p class="footnote"><a href="https://www.e-droid.net/privacy.php?ida=3714260&idl=en" target="_blank" style="text-decoration:none; color:#111827; opacity:0.7; cursor:none">Privacy policy</a></p>
     </section>
 
     <!-- STREAK VIEW -->
