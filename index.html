@@ -180,7 +180,7 @@
   /* Pretty reset-modal */
    .reset-modal {
   position: fixed; inset: 0;
-  background: rgba(255,255,255,.5);
+  background: rgba(255,255,255,.4);
   display: flex; align-items: center; justify-content: center;
   z-index: 9999;
 }
@@ -223,7 +223,7 @@
 </head>
 <body>
 <!-- Pretty share-modal -->
-<div id="shareModal" style="display:none;position:fixed;inset:0;background:rgba(255,255,255,.5);z-index:999;align-items:center;justify-content:center;">
+<div id="shareModal" style="display:none;position:fixed;inset:0;background:rgba(255,255,255,.4);z-index:999;align-items:center;justify-content:center;">
   <div style="background:#eef1ff;border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px 28px;max-width:320px;text-align:center;color:#454545;font-family:system-ui;">
     <h3 style="margin:0 0 12px;font-size:18px;">Share Quote</h3>
     <p id="shareText" style="margin:0 0 20px;font-size:15px;line-height:1.4;"></p>
@@ -552,7 +552,7 @@ function saveQuoteAsImage(){
   const cardR = 32;
   const cardX = pad, cardY = pad, cardW = W - pad*2, cardH = H - pad*2;
   roundRect(ctx, cardX, cardY, cardW, cardH, cardR);
-  ctx.fillStyle = "rgba(255,255,255,.5)";
+  ctx.fillStyle = "rgba(255,255,255,.1)";
   ctx.fill();
   ctx.strokeStyle = "rgba(0,0,0,.1)";
   ctx.lineWidth = 2;
