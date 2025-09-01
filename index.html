@@ -533,8 +533,8 @@ function saveQuoteAsImage(){
 
   // Background gradient
   const g1 = ctx.createLinearGradient(0,0,W,H);
-  g1.addColorStop(0, "#e2e8f0");
-  g1.addColorStop(1, "#e2e8f0");
+  g1.addColorStop(0, "#f5f7ff");
+  g1.addColorStop(1, "#f5f7ff");
   ctx.fillStyle = g1; ctx.fillRect(0,0,W,H);
 
   const g2 = ctx.createRadialGradient(W*0.8, H*0.15, 40, W*0.8, H*0.15, 700);
@@ -544,7 +544,7 @@ function saveQuoteAsImage(){
 
   const g3 = ctx.createRadialGradient(W*0.1, H*0.85, 40, W*0.1, H*0.85, 700);
   g3.addColorStop(0, "rgba(14,165,233,0.35)");
-  g3.addColorStop(1, "rgba(99,102,241,0.00)");
+  g3.addColorStop(1, "rgba(14,165,233,0.00)");
   ctx.fillStyle = g3; ctx.fillRect(0,0,W,H);
 
   // Card
