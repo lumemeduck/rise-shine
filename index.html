@@ -538,12 +538,12 @@ function saveQuoteAsImage(){
   ctx.fillStyle = g1; ctx.fillRect(0,0,W,H);
 
   const g2 = ctx.createRadialGradient(W*0.8, H*0.15, 40, W*0.8, H*0.15, 700);
-  g2.addColorStop(0, "rgba(14,165,233,.30)");
+  g2.addColorStop(0, "rgba(14,165,233,.25)");
   g2.addColorStop(1, "rgba(14,165,233,0)");
   ctx.fillStyle = g2; ctx.fillRect(0,0,W,H);
 
   const g3 = ctx.createRadialGradient(W*0.1, H*0.85, 40, W*0.1, H*0.85, 700);
-  g3.addColorStop(0, "rgba(99,102,241,.35)");
+  g3.addColorStop(0, "rgba(99,102,241,.30)");
   g3.addColorStop(1, "rgba(99,102,241,0)");
   ctx.fillStyle = g3; ctx.fillRect(0,0,W,H);
 
@@ -552,9 +552,9 @@ function saveQuoteAsImage(){
   const cardR = 32;
   const cardX = pad, cardY = pad, cardW = W - pad*2, cardH = H - pad*2;
   roundRect(ctx, cardX, cardY, cardW, cardH, cardR);
-  ctx.fillStyle = "rgba(255,255,255,.45)";
+  ctx.fillStyle = "rgba(255,255,255,.5)";
   ctx.fill();
-  ctx.strokeStyle = "rgba(0,0,0,.15)";
+  ctx.strokeStyle = "rgba(0,0,0,.2)";
   ctx.lineWidth = 2;
   ctx.stroke();
 
