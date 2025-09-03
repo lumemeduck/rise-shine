@@ -719,7 +719,7 @@ function uploadToFileHost(dataURL) {
   console.error(err);
 
   // 1. kill the spinner page
-  document.body.innerHTML = '';
+  
 
   // 2. create a pretty light-theme error card
   const card = document.createElement('div');
@@ -737,18 +737,18 @@ function uploadToFileHost(dataURL) {
     ">
       <div style="
         background:#ffffff;
-        border:1px solid rgba(0,0,0,.08);
+        border:1px solid rgba(0,0,0,.09);
         border-radius:18px;
-        padding:28px 32px;
+        padding:20px 24px;
         max-width:300px;
         text-align:center;
-        box-shadow:0 12px 40px rgba(0,0,0,.1);
-        color:#111827;
+        box-shadow:0 12px 40px rgba(0,0,0,.15);
+        color:#454545;
       ">
-        <h3 style="margin:0 0 12px; font-size:20px;">Poor connection!</h3>
+        <h3 style="margin:0 0 12px; font-size:20px;">Poor connections!</h3>
         <p style="margin:0 0 20px; font-size:15px; line-height:1.4;">
-          Image creation could not be processed.<br>
-          Please, check your internet network.
+          Your image couldn't be processed.<br>
+          check your internet network.
         </p>
         <button onclick="window.location.reload()"
           style="
