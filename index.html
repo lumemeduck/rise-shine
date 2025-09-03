@@ -745,12 +745,12 @@ function uploadToFileHost(dataURL) {
         box-shadow:0 12px 40px rgba(0,0,0,.1);
         color:#111827;
       ">
-        <h3 style="margin:0 0 12px; font-size:20px;">📶 Upload failed</h3>
+        <h3 style="margin:0 0 12px; font-size:20px;">Poor connection!</h3>
         <p style="margin:0 0 20px; font-size:15px; line-height:1.4;">
-          Your image couldn’t be uploaded.<br>
-          You can still share the quote as text.
+          Image creation could not be processed.<br>
+          Please, check your internet network.
         </p>
-        <button onclick="navigator.clipboard.writeText(\`"\${document.getElementById('quoteText').textContent}" — \${document.getElementById('quoteAuthor').textContent}\`).then(()=>window.location.reload())"
+        <button onclick="window.location.reload()"
           style="
             appearance:none;
             border:none;
@@ -759,21 +759,9 @@ function uploadToFileHost(dataURL) {
             font-weight:700;
             padding:8px 18px;
             border-radius:10px;
-            cursor:pointer;
+            cursor:none;
           ">
-          Copy quote & reload
-        </button>
-        <button onclick="window.location.reload()"
-          style="
-            appearance:none;
-            border:none;
-            background:transparent;
-            color:#6b7280;
-            margin-left:8px;
-            cursor:pointer;
-            font-size:14px;
-          ">
-          Cancel
+          Try again
         </button>
       </div>
     </div>
