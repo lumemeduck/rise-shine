@@ -732,9 +732,10 @@ function uploadToFileHost(dataURL) {
       <button class="btn-cancel" onclick="document.getElementById('failModal').remove()">Close</button>
     </div>
   `;
-  // Auto-dismiss after 3s
-  setTimeout(() => popup.remove(), 3000);
+  
   document.body.appendChild(modal);
+  // Auto-dismiss after 5s
+  setTimeout(() => popup.remove(), 5000);      
 });
 }
 
