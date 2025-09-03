@@ -719,7 +719,7 @@ function uploadToFileHost(dataURL) {
   console.error(err);
 
   // 1. kill the spinner page
-  
+  document.body.innerHTML = '';
 
   // 2. create a pretty light-theme error card
   const card = document.createElement('div');
