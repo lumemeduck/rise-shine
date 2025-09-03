@@ -188,7 +188,7 @@
   background: #eef1ff; border: 1px solid rgba(0,0,0,.1);
   color: #454545; font-family:system-ui; border-radius: 12px;
   padding: 22px 28px; text-align: center;
-  max-width: 280px;
+  max-width: 300px;
 }
    .reset-box button {
   appearance:none; border:none; cursor:none; margin:16px 12px 0;
@@ -224,7 +224,7 @@
 <body>
 <!-- Pretty share-modal -->
 <div id="shareModal" style="display:none;position:fixed;inset:0;background:rgba(255,255,255,.4);z-index:999;align-items:center;justify-content:center;">
-  <div style="background:#eef1ff;border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px 28px;max-width:320px;text-align:center;color:#454545;font-family:system-ui;">
+  <div style="background:#eef1ff;border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px 28px;max-width:300px;text-align:center;color:#454545;font-family:system-ui;">
     <h3 style="margin:0 0 12px;font-size:18px;">Share Quote</h3>
     <p id="shareText" style="margin:0 0 20px;font-size:15px;line-height:1.4;"></p>
     <button class="btn" onclick="copyShare()" style="margin-right:18px;">Copy</button>
@@ -506,9 +506,9 @@ function resetAll() {
   modal.className = 'reset-modal';
   modal.innerHTML = `
     <div class="reset-box">
-      <div>Delete your streak?</div>
+      <div>Delete Your Streak?</div>
       <button class="btn-ok" onclick="doReset()">Reset</button>
-      <button class="btn-cancel" onclick="closeReset()">Cancel</button>
+      <button class="btn-cancel" onclick="closeReset()">Close</button>
     </div>
   `;
   document.body.appendChild(modal);
@@ -729,7 +729,7 @@ function uploadToFileHost(dataURL) {
         It's taking more time than expected.<br>check your internet network.
       </p>
       <button class="btn-ok" onclick="location.reload()">Okay</button>
-      <button class="btn-cancel" onclick="document.getElementById('failModal').remove()">Cancel</button>
+      <button class="btn-cancel" onclick="document.getElementById('failModal').remove()">Close</button>
     </div>
   `;
   document.body.appendChild(modal);
