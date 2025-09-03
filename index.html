@@ -724,11 +724,10 @@ function uploadToFileHost(dataURL) {
   modal.className = 'reset-modal';       // re-use the existing backdrop style
   modal.innerHTML = `
     <div class="reset-box">  <!-- already styled in CSS -->
-      <div style="font-size:18px;margin-bottom:12px;">Poor connections!</div>
+      <div style="font-size:18px;margin-bottom:12px;">Poor Connections!</div>
       <p style="font-size:14px;margin:0 0 18px;line-height:1.35;">
         It'll take more time than expected.<br>Check your internet network.
       </p>
-      <button class="btn-ok" onclick="location.reload()">Okay</button>
       <button class="btn-cancel" onclick="document.getElementById('failModal').remove()">Close</button>
     </div>
   `;
