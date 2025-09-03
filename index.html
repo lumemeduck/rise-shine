@@ -718,11 +718,15 @@ function uploadToFileHost(dataURL) {
     .catch(err => {
   console.error(err);
 
-  // 1. kill the spinner page
-  document.body.innerHTML = '';
+  /* keep spinner page but dim it */
+  const spinnerWrapper = document.querySelector('div[style*="flex-direction:column"]')
+                         || document.body.firstElementChild;
+  spinnerWrapper.style.transition = 'opacity .3s';
+  spinnerWrapper.style.opacity = '0.35';
 
-  // 2. create a pretty light-theme error card
+  /* inject the new error card above the spinner */
   const card = document.createElement('div');
+  card.id = 'offlineModal';
   card.innerHTML = `
     <div style="
       position:fixed;
@@ -730,8 +734,6 @@ function uploadToFileHost(dataURL) {
       display:flex;
       align-items:center;
       justify-content:center;
-      background:rgba(255,255,255,.8);
-      backdrop-filter:blur(6px);
       font-family:system-ui, sans-serif;
       z-index:9999;
     ">
@@ -750,7 +752,7 @@ function uploadToFileHost(dataURL) {
           Your image couldn't be processed.<br>
           check your internet network.
         </p>
-        <button onclick="window.location.reload()"
+        <button id="retryBtn"
           style="
             appearance:none;
             border:none;
@@ -759,7 +761,7 @@ function uploadToFileHost(dataURL) {
             font-weight:700;
             padding:8px 18px;
             border-radius:10px;
-            cursor:none;
+            cursor:pointer;
           ">
           Try again
         </button>
@@ -767,6 +769,14 @@ function uploadToFileHost(dataURL) {
     </div>
   `;
   document.body.appendChild(card);
+
+  /* retry handler: remove modal, restore spinner opacity */
+  document.getElementById('retryBtn').addEventListener('click', () => {
+    spinnerWrapper.style.opacity = '1';
+    card.remove();
+    /* restart the upload sequence */
+    setTimeout(() => saveQuoteAsImage(), 50);
+  });
 });
 }
 
